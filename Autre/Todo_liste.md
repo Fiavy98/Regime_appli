@@ -126,11 +126,14 @@
 		- poids
 		- imc
 		- date
-
+	-Table gold 
+    	- id
+    	- prix
 	- Table userGold
 		- id
 		- id_user
-		- prixGold
+		- id_gold
+		- date_achat
 ---
 
 ## Eddy — Authentification · Profil · IMC · Objectif
