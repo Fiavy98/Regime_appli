@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NutriPlan - Admin</title>
+  <title>NutriPlan - Admin Sports</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -15,6 +15,9 @@
       <div class="logo">NutriPlan Admin</div>
       <nav class="nav-links">
         <a href="<?= base_url('/admin') ?>">Dashboard</a>
+        <a href="<?= base_url('/admin/regimes') ?>">Regimes</a>
+        <a href="<?= base_url('/admin/sports') ?>">Sports</a>
+        <a href="<?= base_url('/admin/codes') ?>">Codes</a>
       </nav>
       <div class="nav-actions">
         <a class="btn btn-outline" href="<?= base_url('/logout') ?>">Logout</a>
@@ -22,28 +25,11 @@
     </header>
 
     <section class="section">
-      <h2 class="section-title">Back office admin</h2>
-      <p class="section-sub">Acces reserve au role admin.</p>
+      <h2 class="section-title">Gestion des sports</h2>
+      <p class="section-sub">CRUD sports et activites sportives (placeholder).</p>
       <div class="card">
-        <h4>Gestion</h4>
-        <small>CRUD regimes, aliments, sports, codes et statistiques.</small>
-      </div>
-      <div class="card-grid" style="margin-top: 20px;">
-        <div class="card">
-          <h4>Regimes</h4>
-          <small>CRUD programmes et aliments.</small>
-          <a class="btn btn-outline" href="<?= base_url('/admin/regimes') ?>">Ouvrir</a>
-        </div>
-        <div class="card">
-          <h4>Sports</h4>
-          <small>CRUD sports et activites.</small>
-          <a class="btn btn-outline" href="<?= base_url('/admin/sports') ?>">Ouvrir</a>
-        </div>
-        <div class="card">
-          <h4>Codes</h4>
-          <small>Gestion des codes prepayes.</small>
-          <a class="btn btn-outline" href="<?= base_url('/admin/codes') ?>">Ouvrir</a>
-        </div>
+        <h4>Sports</h4>
+        <small>Cette page sera reliee aux tables sports et activiteSportive.</small>
       </div>
     </section>
   </div>

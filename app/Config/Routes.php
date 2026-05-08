@@ -21,3 +21,6 @@ $routes->post('/user/check_email', 'UserController::checkEmail');
 
 $routes->get('/dashboard', 'UserController::dashboard', ['filter' => 'role:user']);
 $routes->get('/admin', 'AdminController::dashboard', ['filter' => 'role:admin']);
+$routes->get('/admin/regimes', 'AdminController::regimes', ['filter' => 'role:admin']);
+$routes->get('/admin/sports', 'AdminController::sports', ['filter' => 'role:admin']);
+$routes->get('/admin/codes', 'AdminController::codes', ['filter' => 'role:admin']);
