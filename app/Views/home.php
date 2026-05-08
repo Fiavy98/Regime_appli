@@ -33,7 +33,7 @@
         </p>
         <div class="nav-actions">
           <a class="btn btn-primary" href="<?= base_url('/login') ?>">Se connecter</a>
-          <a class="btn btn-outline" href="<?= base_url('/regimes') ?>">Voir les regimes</a>
+          <a class="btn btn-outline" href="<?= base_url('/register/step1') ?>">S'inscrire</a>
         </div>
       </div>
       <div class="hero-card">
@@ -67,7 +67,7 @@
         <div class="card">
           <h4>Compte</h4>
           <small>Inscription en 2 etapes et suivi IMC</small>
-          <a class="btn btn-outline" href="<?= base_url('/login') ?>">Se connecter</a>
+          <a class="btn btn-outline" href="<?= base_url('/register/step1') ?>">Commencer</a>
         </div>
       </div>
     </section>
