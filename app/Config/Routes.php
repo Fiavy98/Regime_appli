@@ -24,3 +24,19 @@ $routes->get('/admin', 'AdminController::dashboard', ['filter' => 'role:admin'])
 $routes->get('/admin/regimes', 'AdminController::regimes', ['filter' => 'role:admin']);
 $routes->get('/admin/sports', 'AdminController::sports', ['filter' => 'role:admin']);
 $routes->get('/admin/codes', 'AdminController::codes', ['filter' => 'role:admin']);
+
+$routes->post('/admin/categories/create', 'AdminController::createCategorie', ['filter' => 'role:admin']);
+$routes->post('/admin/categories/update', 'AdminController::updateCategorie', ['filter' => 'role:admin']);
+$routes->post('/admin/categories/delete', 'AdminController::deleteCategorie', ['filter' => 'role:admin']);
+
+$routes->post('/admin/aliments/create', 'AdminController::createAliment', ['filter' => 'role:admin']);
+$routes->post('/admin/aliments/update', 'AdminController::updateAliment', ['filter' => 'role:admin']);
+$routes->post('/admin/aliments/delete', 'AdminController::deleteAliment', ['filter' => 'role:admin']);
+
+$routes->post('/admin/programmes/create', 'AdminController::createProgramme', ['filter' => 'role:admin']);
+$routes->post('/admin/programmes/update', 'AdminController::updateProgramme', ['filter' => 'role:admin']);
+$routes->post('/admin/programmes/delete', 'AdminController::deleteProgramme', ['filter' => 'role:admin']);
+
+$routes->post('/admin/compositions/create', 'AdminController::createComposition', ['filter' => 'role:admin']);
+$routes->post('/admin/compositions/update', 'AdminController::updateComposition', ['filter' => 'role:admin']);
+$routes->post('/admin/compositions/delete', 'AdminController::deleteComposition', ['filter' => 'role:admin']);
