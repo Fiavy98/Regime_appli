@@ -1,9 +1,9 @@
 INSERT INTO user (name, genre, age, email, psswd, role) VALUES
-('Rakoto Aina', 'Homme', 25, 'aina@gmail.com', 'pass123', 'user'),
-('Rasoanaivo Fara', 'Femme', 22, 'fara@gmail.com', 'pass123', 'user'),
-('Andry Solo', 'Homme', 30, 'andry@gmail.com', 'pass123', 'admin'),
-('Hery Tiana', 'Homme', 28, 'hery@gmail.com', 'pass123', 'user'),
-('Lala Kely', 'Femme', 20, 'lala@gmail.com', 'pass123', 'visiteur');
+('Rakoto Aina', 'Homme', 25, 'aina@gmail.com', '$2y$10$W534zCjFlmcz8lylPjBwlu6LChYmienqhUgfgXu4ghyoVLeloSG9m', 'user'),
+('Rasoanaivo Fara', 'Femme', 22, 'fara@gmail.com', '$2y$10$W534zCjFlmcz8lylPjBwlu6LChYmienqhUgfgXu4ghyoVLeloSG9m', 'user'),
+('Andry Solo', 'Homme', 30, 'andry@gmail.com', '$2y$10$W534zCjFlmcz8lylPjBwlu6LChYmienqhUgfgXu4ghyoVLeloSG9m', 'admin'),
+('Hery Tiana', 'Homme', 28, 'hery@gmail.com', '$2y$10$W534zCjFlmcz8lylPjBwlu6LChYmienqhUgfgXu4ghyoVLeloSG9m', 'user'),
+('Lala Kely', 'Femme', 20, 'lala@gmail.com', '$2y$10$W534zCjFlmcz8lylPjBwlu6LChYmienqhUgfgXu4ghyoVLeloSG9m', 'visiteur');
 
 INSERT INTO objectif (id, name) VALUES
 (1, 'Augmenter poids'),
@@ -40,6 +40,38 @@ INSERT INTO programmeRegime (nom, id_objectif, variation_poids, imc_min, imc_max
 ('Maintien Equilibre', 3, 0, 18, 27, 60, 60000),
 ('Fitness Avance', 2, -2, 19, 26, 40, 70000),
 ('Sante Complete', 3, 0, 18, 30, 90, 90000);
+
+INSERT INTO programmeAliment (id_programmeRegime, id_aliment, quantite_g, type_repas) VALUES
+(1, 3, 1, 'PETIT_DEJEUNER'),
+(1, 5, 250, 'PETIT_DEJEUNER'),
+(1, 1, 150, 'DEJEUNER'),
+(1, 2, 120, 'DEJEUNER'),
+(1, 4, 100, 'DINER'),
+(1, 6, 1, 'COLLATION'),
+(2, 7, 120, 'PETIT_DEJEUNER'),
+(2, 8, 3, 'PETIT_DEJEUNER'),
+(2, 2, 180, 'DEJEUNER'),
+(2, 9, 150, 'DEJEUNER'),
+(2, 1, 220, 'DINER'),
+(2, 5, 250, 'COLLATION'),
+(3, 1, 120, 'PETIT_DEJEUNER'),
+(3, 6, 1, 'PETIT_DEJEUNER'),
+(3, 2, 140, 'DEJEUNER'),
+(3, 4, 120, 'DEJEUNER'),
+(3, 9, 130, 'DINER'),
+(3, 10, 60, 'COLLATION'),
+(4, 7, 100, 'PETIT_DEJEUNER'),
+(4, 5, 250, 'PETIT_DEJEUNER'),
+(4, 2, 160, 'DEJEUNER'),
+(4, 9, 120, 'DEJEUNER'),
+(4, 8, 2, 'DINER'),
+(4, 3, 2, 'COLLATION'),
+(5, 1, 130, 'PETIT_DEJEUNER'),
+(5, 5, 300, 'PETIT_DEJEUNER'),
+(5, 2, 150, 'DEJEUNER'),
+(5, 4, 100, 'DEJEUNER'),
+(5, 8, 2, 'DINER'),
+(5, 6, 1, 'COLLATION');
 
 INSERT INTO sports (name, category) VALUES
 ('Course a pied', 'Cardio'),

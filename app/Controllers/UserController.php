@@ -2,10 +2,16 @@
 
 namespace App\Controllers;
 
+use App\Models\AchatRegimeModel;
+use App\Models\ProgrammeRegimeModel;
+use App\Models\UserGoldModel;
+use App\Models\UserProgrammeModel;
+use App\Models\UserSportModel;
 use App\Models\ImcHistoryModel;
 use App\Models\UserBodyModel;
 use App\Models\UserModel;
 use App\Models\UserPortefeuileModel;
+use App\Services\UserDashboardService;
 
 class UserController extends BaseController
 {
@@ -16,47 +22,26 @@ class UserController extends BaseController
             return redirect()->to('/login');
         }
 
-        $userBodyModel = new UserBodyModel();
-        $imcHistoryModel = new ImcHistoryModel();
-
-        $body = $userBodyModel
-            ->where('id_user', $userId)
-            ->orderBy('date', 'DESC')
-            ->first();
-
-        $history = $imcHistoryModel
-            ->where('id_user', $userId)
-            ->orderBy('date', 'ASC')
-            ->findAll();
-
-        $imc = null;
-        $imcLabel = '---';
-        if ($body && (float) $body['taille'] > 0) {
-            $imc = (float) $body['poids'] / ((float) $body['taille'] * (float) $body['taille']);
-            if ($imc < 18.5) {
-                $imcLabel = 'Maigre';
-            } elseif ($imc < 25) {
-                $imcLabel = 'Normal';
-            } elseif ($imc < 30) {
-                $imcLabel = 'Surpoids';
-            } else {
-                $imcLabel = 'Obesite';
-            }
-        }
-
-        $historyLabels = array_map(static function ($row) {
-            return $row['date'];
-        }, $history);
-        $historyValues = array_map(static function ($row) {
-            return (float) $row['imc'];
-        }, $history);
+        $data = (new UserDashboardService())->getProfileData($userId);
 
         return view('profil', [
-            'body' => $body,
-            'imc' => $imc,
-            'imcLabel' => $imcLabel,
-            'historyLabels' => json_encode($historyLabels),
-            'historyValues' => json_encode($historyValues),
+            'body' => $data['body'],
+            'imc' => $data['imc'],
+            'imcLabel' => $data['imcLabel'],
+            'objectifLabel' => $data['objectifLabel'],
+            'walletAmount' => $data['walletAmount'],
+            'historyLabels' => $data['historyLabels'],
+            'historyValues' => $data['historyValues'],
+            'currentProgramme' => $data['currentProgramme'],
+            'progressPercent' => $data['progressPercent'],
+            'progressDays' => $data['progressDays'],
+            'progressTotal' => $data['progressTotal'],
+            'mealCounts' => $data['mealCounts'],
+            'activeRegimesCount' => $data['activeRegimesCount'],
+            'completedRegimesCount' => $data['completedRegimesCount'],
+            'badgeLabel' => $data['badgeLabel'],
+            'weightDelta' => $data['weightDelta'],
+            'userEmail' => $data['userEmail'],
         ]);
     }
 
@@ -101,6 +86,141 @@ class UserController extends BaseController
         ]);
 
         return redirect()->to('/dashboard')->with('profil_success', 'Poids mis a jour.');
+    }
+
+    public function regimes()
+    {
+        $userId = (int) (session()->get('id_user') ?? 0);
+        if ($userId <= 0) {
+            return redirect()->to('/login');
+        }
+
+        $data = (new UserDashboardService())->getRegimeData($userId, (int) ($this->request->getGet('id') ?? 0));
+
+        return view('user/regime_detail', [
+            'programmes' => $data['programmes'],
+            'programme' => $data['programme'],
+            'meals' => $data['meals'],
+            'wallet' => $data['wallet'],
+            'hasGold' => $data['hasGold'],
+            'discount' => $data['discount'],
+            'finalPrice' => $data['finalPrice'],
+            'objectifLabel' => $data['objectifLabel'],
+            'userEmail' => $data['userEmail'],
+            'badgeLabel' => $data['badgeLabel'],
+        ]);
+    }
+
+    public function purchaseRegime()
+    {
+        $userId = (int) (session()->get('id_user') ?? 0);
+        if ($userId <= 0) {
+            return redirect()->to('/login');
+        }
+
+        $programmeId = (int) $this->request->getPost('id_programmeRegime');
+        if ($programmeId <= 0) {
+            return redirect()->to('/dashboard/regimes')->with('profil_error', 'Programme invalide.');
+        }
+
+        $programme = (new ProgrammeRegimeModel())->find($programmeId);
+        if (!$programme) {
+            return redirect()->to('/dashboard/regimes')->with('profil_error', 'Programme introuvable.');
+        }
+
+        $walletModel = new UserPortefeuileModel();
+        $wallet = $walletModel->where('id_user', $userId)->first();
+        $balance = $wallet ? (float) $wallet['montant'] : 0.0;
+
+        $hasGold = (bool) (new UserGoldModel())->where('id_user', $userId)->first();
+        $price = (float) $programme['prix'];
+        $discount = $hasGold ? $price * 0.15 : 0.0;
+        $finalPrice = $price - $discount;
+
+        if ($balance < $finalPrice) {
+            return redirect()->to('/dashboard/regimes?id=' . $programmeId)->with('profil_error', 'Solde insuffisant.');
+        }
+
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        $achatId = (new AchatRegimeModel())->insert([
+            'id_user' => $userId,
+            'prix_total' => $finalPrice,
+            'reduction_appliquee' => $discount,
+            'est_gold_utilise' => $hasGold ? 1 : 0,
+            'date_achat' => date('Y-m-d H:i:s'),
+        ], true);
+
+        (new AchatRegimeDetailModel())->insert([
+            'id_achatRegime' => $achatId,
+            'id_programmeRegime' => $programmeId,
+            'prix_unitaire' => $finalPrice,
+        ]);
+
+        (new UserProgrammeModel())->insert([
+            'id_user' => $userId,
+            'id_programmeRegime' => $programmeId,
+            'date_debut' => date('Y-m-d'),
+            'date_fin' => null,
+            'prix_paye' => $finalPrice,
+            'id_statusRegime' => 1,
+        ]);
+
+        if ($wallet) {
+            $walletModel->update($wallet['id'], [
+                'montant' => $balance - $finalPrice,
+            ]);
+        }
+
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+            return redirect()->to('/dashboard/regimes?id=' . $programmeId)->with('profil_error', 'Achat impossible.');
+        }
+
+        return redirect()->to('/dashboard/regimes?id=' . $programmeId)->with('profil_success', 'Achat effectue.');
+    }
+
+    public function sports()
+    {
+        $userId = (int) (session()->get('id_user') ?? 0);
+        if ($userId <= 0) {
+            return redirect()->to('/login');
+        }
+
+        $data = (new UserDashboardService())->getSportsData($userId, (string) ($this->request->getGet('niveau') ?? ''));
+
+        return view('user/sports', [
+            'niveau' => $data['niveau'],
+            'activites' => $data['activites'],
+            'objectifLabel' => $data['objectifLabel'],
+            'userEmail' => $data['userEmail'],
+            'badgeLabel' => $data['badgeLabel'],
+        ]);
+    }
+
+    public function startSport()
+    {
+        $userId = (int) (session()->get('id_user') ?? 0);
+        if ($userId <= 0) {
+            return redirect()->to('/login');
+        }
+
+        $activiteId = (int) $this->request->getPost('id_activite');
+        if ($activiteId <= 0) {
+            return redirect()->to('/dashboard/sports')->with('profil_error', 'Activite invalide.');
+        }
+
+        (new UserSportModel())->insert([
+            'id_user' => $userId,
+            'id_activiteSportive' => $activiteId,
+            'start_date' => date('Y-m-d'),
+            'end_date' => null,
+            'id_statusRegime' => 1,
+        ]);
+
+        return redirect()->to('/dashboard/sports')->with('profil_success', 'Activite demarree.');
     }
 
     public function registerStep1()
@@ -258,6 +378,7 @@ class UserController extends BaseController
             'id_user' => $userId,
             'role' => 'user',
             'nom' => $register['name'],
+            'email' => $register['email'],
         ]);
 
         return $this->response->setJSON([
@@ -265,4 +386,5 @@ class UserController extends BaseController
             'redirect' => base_url('/dashboard'),
         ]);
     }
+
 }

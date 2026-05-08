@@ -1,3 +1,9 @@
+const endpoints = window.NutriPlanRegister || {
+  checkEmail: '/user/check_email',
+  step1: '/register/step1',
+  step2: '/register/step2',
+};
+
 const clearErrors = (form) => {
   form.querySelectorAll('[data-error]').forEach((el) => {
     el.textContent = '';
@@ -18,7 +24,7 @@ const checkEmail = async (email) => {
     return null;
   }
 
-  const response = await fetch('/user/check_email', {
+  const response = await fetch(endpoints.checkEmail, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ email }),
@@ -55,7 +61,7 @@ if (step1Form) {
     event.preventDefault();
     clearErrors(step1Form);
 
-    const response = await fetch('/register/step1', {
+    const response = await fetch(endpoints.step1, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(new FormData(step1Form)),
@@ -77,7 +83,7 @@ if (step2Form) {
     event.preventDefault();
     clearErrors(step2Form);
 
-    const response = await fetch('/register/step2', {
+    const response = await fetch(endpoints.step2, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(new FormData(step2Form)),

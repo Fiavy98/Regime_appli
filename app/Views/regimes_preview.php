@@ -1,46 +1,43 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NutriPlan - Regimes</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<?= base_url('assets/css/public.css') ?>">
-</head>
-<body>
-  <div class="page-wrap">
-    <header class="topbar">
-      <div class="logo">NutriPlan</div>
-      <nav class="nav-links">
-        <a href="<?= base_url('/') ?>">Accueil</a>
-        <a href="<?= base_url('/regimes') ?>">Regimes</a>
-        <a href="<?= base_url('/sports') ?>">Sports</a>
-      </nav>
-      <div class="nav-actions">
-        <a class="btn btn-outline" href="<?= base_url('/login') ?>">Se connecter</a>
-      </div>
-    </header>
+<?= view('partials/public_header', [
+  'title' => 'NutriPlan - Régimes',
+  'bodyClass' => 'public-page regimes-page',
+  'nav' => [
+    ['label' => 'Accueil', 'href' => base_url('/')],
+    ['label' => 'Régimes', 'href' => base_url('/regimes')],
+    ['label' => 'Sports', 'href' => base_url('/sports')],
+  ],
+  'action' => ['label' => 'Se connecter', 'href' => base_url('/login'), 'class' => 'btn btn-outline'],
+]) ?>
 
-    <section class="section">
-      <h2 class="section-title">Apercu des regimes</h2>
-      <p class="section-sub">Uniquement les informations publiques (sans details des aliments).</p>
-      <div class="card-grid">
+    <section class="public-hero public-hero-regimes">
+      <div>
+        <div class="pill">🥗 Aperçu public</div>
+        <h1 class="public-title">Découvrez nos régimes</h1>
+        <p class="public-subtitle">
+          Un aperçu clair des programmes disponibles avant inscription. Connectez-vous pour voir les détails complets et acheter.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="<?= base_url('/register/step1') ?>">Commencer gratuitement →</a>
+    </section>
+
+    <section class="section section-wide">
+      <div class="showcase-grid preview-grid">
         <?php foreach ($regimes as $regime): ?>
-          <div class="card">
-            <div class="pill"><?= esc($regime['objectif']) ?></div>
-            <h4><?= esc($regime['name']) ?></h4>
-            <small>Duree: <?= esc($regime['duree']) ?></small>
-            <small>Prix: <?= esc($regime['prix']) ?></small>
-          </div>
+          <article class="showcase-card preview-card">
+            <span><?= esc($regime['objectif']) ?></span>
+            <h3><?= esc($regime['name']) ?></h3>
+            <p>Programme <?= esc($regime['duree']) ?></p>
+            <div class="showcase-meta">
+              <span>📅 <?= esc($regime['duree']) ?></span>
+              <span>💰 <?= esc($regime['prix']) ?> Ar</span>
+              <span>👁 Aperçu public</span>
+            </div>
+            <div class="showcase-note">Connectez-vous pour voir la composition détaillée.</div>
+          </article>
         <?php endforeach; ?>
       </div>
     </section>
 
-    <footer class="footer">
-      Cree un compte pour voir les details et acheter un regime.
-    </footer>
-  </div>
-</body>
-</html>
+<?= view('partials/public_footer', [
+  'footer' => 'Créez un compte pour accéder aux régimes détaillés.',
+]) ?>

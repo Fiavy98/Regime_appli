@@ -10,43 +10,214 @@
   <link rel="stylesheet" href="<?= base_url('assets/css/public.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/admin.css') ?>">
 </head>
-<body>
-  <div class="page-wrap">
-    <header class="topbar">
-      <div class="logo">NutriPlan Admin</div>
-      <nav class="nav-links">
-        <a href="<?= base_url('/admin') ?>">Dashboard</a>
-      </nav>
-      <div class="nav-actions">
-        <a class="btn btn-outline" href="<?= base_url('/logout') ?>">Logout</a>
-      </div>
-    </header>
+<body class="admin-page">
+  <div class="app-shell">
+    <?= view('admin/_sidebar', ['active' => 'dashboard']) ?>
 
-    <section class="section">
-      <h2 class="section-title">Back office admin</h2>
-      <p class="section-sub">Acces reserve au role admin.</p>
-      <div class="card">
-        <h4>Gestion</h4>
-        <small>CRUD regimes, aliments, sports, codes et statistiques.</small>
-      </div>
-      <div class="card-grid" style="margin-top: 20px;">
-        <div class="card">
-          <h4>Regimes</h4>
-          <small>CRUD programmes et aliments.</small>
-          <a class="btn btn-outline" href="<?= base_url('/admin/regimes') ?>">Ouvrir</a>
+    <main class="content">
+      <div class="admin-header">
+        <div>
+          <h1>Tableau de bord</h1>
+          <p>Vue d'ensemble de l'application</p>
         </div>
-        <div class="card">
-          <h4>Sports</h4>
-          <small>CRUD sports et activites.</small>
-          <a class="btn btn-outline" href="<?= base_url('/admin/sports') ?>">Ouvrir</a>
-        </div>
-        <div class="card">
-          <h4>Codes</h4>
-          <small>Gestion des codes prepayes.</small>
-          <a class="btn btn-outline" href="<?= base_url('/admin/codes') ?>">Ouvrir</a>
+        <div class="admin-actions">
+          <form method="get" action="<?= base_url('/admin') ?>" class="period-filter">
+            <select class="input admin-select" name="period" onchange="this.form.submit()">
+              <option value="month" <?= $period === 'month' ? 'selected' : '' ?>>Ce mois</option>
+              <option value="quarter" <?= $period === 'quarter' ? 'selected' : '' ?>>3 derniers mois</option>
+              <option value="year" <?= $period === 'year' ? 'selected' : '' ?>>Cette annee</option>
+            </select>
+          </form>
+          <button class="btn btn-outline" type="button">Exporter rapport</button>
         </div>
       </div>
-    </section>
+
+      <section class="admin-stats">
+        <article class="stat-card">
+          <div>
+            <span>Utilisateurs total</span>
+            <strong><?= number_format((int) $usersTotal, 0, ',', ' ') ?></strong>
+            <small>+<?= (int) $growthUsers ?>% ce mois</small>
+          </div>
+          <div class="stat-icon">👥</div>
+        </article>
+        <article class="stat-card">
+          <div>
+            <span>Revenus totaux</span>
+            <strong><?= number_format((float) $revenusCurrent, 0, ',', ' ') ?> Ar</strong>
+            <small>+<?= (int) $growthRevenus ?>% ce mois</small>
+          </div>
+          <div class="stat-icon">💰</div>
+        </article>
+        <article class="stat-card">
+          <div>
+            <span>Abonnes Gold</span>
+            <strong><?= number_format((int) $goldCurrent, 0, ',', ' ') ?></strong>
+            <small>+<?= (int) $growthGold ?>% ce mois</small>
+          </div>
+          <div class="stat-icon">👑</div>
+        </article>
+        <article class="stat-card">
+          <div>
+            <span>Regimes vendus</span>
+            <strong><?= number_format((int) $regimesCurrent, 0, ',', ' ') ?></strong>
+            <small>+<?= (int) $growthRegimes ?>% ce mois</small>
+          </div>
+          <div class="stat-icon">🥗</div>
+        </article>
+      </section>
+
+      <section class="admin-panels">
+        <div class="admin-panel-card">
+          <div class="panel-header">
+            <div>
+              <h3>📊 Inscriptions & ventes mensuelles</h3>
+              <p>Evolution sur les 8 derniers mois</p>
+            </div>
+          </div>
+          <div class="chart-placeholder">
+            <canvas id="inscriptionsChart" height="180"></canvas>
+          </div>
+        </div>
+        <div class="admin-panel-card">
+          <div class="panel-header">
+            <div>
+              <h3>🎯 Ventes par objectif</h3>
+              <p>Repartition des regimes</p>
+            </div>
+          </div>
+          <div class="chart-donut">
+            <canvas id="objectifChart" height="220"></canvas>
+            <ul>
+              <?php foreach ($ventesObjectif as $index => $row): ?>
+                <?php $percent = ($totalObjectiveSales ?? 0) > 0 ? round(((int) $row['total'] / $totalObjectiveSales) * 100) : 0; ?>
+                <li>
+                  <span class="dot <?= ['green', 'blue', 'orange', 'red'][$index % 4] ?>"></span>
+                  <?= esc($row['objectif'] ?? 'Autre') ?> - <?= (int) $row['total'] ?> (<?= (int) $percent ?>%)
+                </li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="admin-panels">
+        <div class="admin-panel-card">
+          <div class="panel-header">
+            <div>
+              <h3>🧾 Derniers achats</h3>
+              <p>Transactions recentes</p>
+            </div>
+            <a class="btn btn-outline" href="<?= base_url('/admin/regimes') ?>">Voir tout</a>
+          </div>
+          <div class="table">
+            <div class="table-row head">
+              <span>Utilisateur</span><span>Regime</span><span>Prix paye</span><span>Gold</span><span>Date</span><span>Actions</span>
+            </div>
+            <?php foreach ($achats as $achat): ?>
+              <div class="table-row">
+                <span><?= esc($achat['user_name'] ?? '---') ?></span>
+                <span><?= esc($achat['regime_nom'] ?? '---') ?></span>
+                <span><?= number_format((float) ($achat['prix_total'] ?? 0), 0, ',', ' ') ?> Ar</span>
+                <span class="tag <?= !empty($achat['est_gold_utilise']) ? 'gold' : '' ?>">
+                  <?= !empty($achat['est_gold_utilise']) ? 'Oui' : 'Non' ?>
+                </span>
+                <span><?= !empty($achat['date_achat']) ? date('d M Y', strtotime($achat['date_achat'])) : '--' ?></span>
+                <span>
+                  <a class="btn btn-outline btn-xs" href="<?= base_url('/admin/regimes?id=' . ($achat['programme_id'] ?? '')) ?>">Voir</a>
+                </span>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+        <div class="admin-panel-card">
+          <div class="panel-header">
+            <div>
+              <h3>🎟️ Codes prépayés</h3>
+              <p>Gestion rapide des codes</p>
+            </div>
+            <a class="btn btn-primary" href="<?= base_url('/admin/codes') ?>">+ Creer un code</a>
+          </div>
+          <div class="table">
+            <div class="table-row head">
+              <span>Code</span><span>Montant</span><span>Expiration</span><span>Statut</span><span>Actions</span>
+            </div>
+            <?php foreach ($codes as $code): ?>
+              <div class="table-row">
+                <span><?= esc($code['code'] ?? '') ?></span>
+                <span><?= number_format((float) ($code['montant'] ?? 0), 0, ',', ' ') ?> Ar</span>
+                <span><?= !empty($code['date_expiration']) ? date('d M Y', strtotime($code['date_expiration'])) : '--' ?></span>
+                <span class="tag <?= $code['status_label'] === 'Utilise' ? 'success' : ($code['status_label'] === 'Expire' ? 'danger' : '') ?>">
+                  <?= esc($code['status_label']) ?>
+                </span>
+                <span>
+                  <a class="btn btn-outline btn-xs" href="<?= base_url('/admin/codes') ?>">Modifier</a>
+                  <a class="btn btn-outline btn-xs danger" href="<?= base_url('/admin/codes') ?>">Supprimer</a>
+                </span>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const labels = <?= $monthLabels ?? '[]' ?>;
+    const inscriptions = <?= $inscriptions ?? '[]' ?>;
+    const ventes = <?= $ventes ?? '[]' ?>;
+    const objectifLabels = <?= $ventesObjectifLabels ?? '[]' ?>;
+    const objectifValues = <?= $ventesObjectifValues ?? '[]' ?>;
+    const chartEl = document.getElementById('inscriptionsChart');
+    const objectifChartEl = document.getElementById('objectifChart');
+
+    if (chartEl) {
+      new Chart(chartEl, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Inscriptions',
+              data: inscriptions,
+              backgroundColor: 'rgba(34, 197, 94, 0.6)',
+              borderRadius: 8,
+            },
+            {
+              label: 'Ventes',
+              data: ventes,
+              backgroundColor: 'rgba(22, 163, 74, 0.3)',
+              borderRadius: 8,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } },
+        },
+      });
+    }
+
+    if (objectifChartEl) {
+      new Chart(objectifChartEl, {
+        type: 'doughnut',
+        data: {
+          labels: objectifLabels,
+          datasets: [{
+            data: objectifValues,
+            backgroundColor: ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444'],
+            borderWidth: 0,
+          }],
+        },
+        options: {
+          responsive: true,
+          cutout: '72%',
+          plugins: { legend: { display: false } },
+        },
+      });
+    }
+  </script>
 </body>
 </html>

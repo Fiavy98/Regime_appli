@@ -1,27 +1,13 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NutriPlan - Sports</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<?= base_url('assets/css/public.css') ?>">
-</head>
-<body>
-  <div class="page-wrap">
-    <header class="topbar">
-      <div class="logo">NutriPlan</div>
-      <nav class="nav-links">
-        <a href="<?= base_url('/') ?>">Accueil</a>
-        <a href="<?= base_url('/regimes') ?>">Regimes</a>
-        <a href="<?= base_url('/sports') ?>">Sports</a>
-      </nav>
-      <div class="nav-actions">
-        <a class="btn btn-outline" href="<?= base_url('/login') ?>">Se connecter</a>
-      </div>
-    </header>
+<?= view('partials/public_header', [
+  'title' => 'NutriPlan - Sports',
+  'bodyClass' => '',
+  'nav' => [
+    ['label' => 'Accueil', 'href' => base_url('/')],
+    ['label' => 'Regimes', 'href' => base_url('/regimes')],
+    ['label' => 'Sports', 'href' => base_url('/sports')],
+  ],
+  'action' => ['label' => 'Se connecter', 'href' => base_url('/login'), 'class' => 'btn btn-outline'],
+]) ?>
 
     <section class="section">
       <h2 class="section-title">Apercu des activites sportives</h2>
@@ -37,9 +23,6 @@
       </div>
     </section>
 
-    <footer class="footer">
-      Inscris-toi pour des recommandations personnalisees.
-    </footer>
-  </div>
-</body>
-</html>
+<?= view('partials/public_footer', [
+  'footer' => 'Inscris-toi pour des recommandations personnalisees.',
+]) ?>

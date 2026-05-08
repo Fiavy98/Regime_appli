@@ -6,6 +6,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const result = document.querySelector('[data-imc-result]');
   const status = document.querySelector('[data-imc-status]');
+  const resultCard = document.querySelector('[data-imc-result-card]');
+
+  const setBadge = (label) => {
+    if (!status || !resultCard) {
+      return;
+    }
+
+    resultCard.classList.remove('imc-card-maigre', 'imc-card-normal', 'imc-card-surpoids', 'imc-card-obesite');
+    status.classList.remove('imc-badge-neutral', 'imc-badge-maigre', 'imc-badge-normal', 'imc-badge-surpoids', 'imc-badge-obesite');
+
+    let className = 'imc-badge-neutral';
+    if (label === 'Maigre') {
+      className = 'imc-badge-maigre';
+      resultCard.classList.add('imc-card-maigre');
+    } else if (label === 'Normal') {
+      className = 'imc-badge-normal';
+      resultCard.classList.add('imc-card-normal');
+    } else if (label === 'Surpoids') {
+      className = 'imc-badge-surpoids';
+      resultCard.classList.add('imc-card-surpoids');
+    } else if (label === 'Obesite') {
+      className = 'imc-badge-obesite';
+      resultCard.classList.add('imc-card-obesite');
+    }
+
+    status.classList.add(className);
+    status.textContent = label;
+  };
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -15,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!taille || !poids || taille <= 0 || poids <= 0) {
       result.textContent = '---';
-      status.textContent = 'Valeurs invalides';
+      setBadge('Valeurs invalides');
       return;
     }
 
@@ -34,6 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     result.textContent = imcRounded.toString();
-    status.textContent = label;
+    setBadge(label);
   });
 });

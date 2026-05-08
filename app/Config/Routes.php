@@ -20,11 +20,20 @@ $routes->post('/register/step2', 'UserController::storeStep2');
 $routes->post('/user/check_email', 'UserController::checkEmail');
 
 $routes->get('/dashboard', 'UserController::profil', ['filter' => 'role:user']);
+$routes->get('/objectif', 'ObjectifController::index', ['filter' => 'role:user']);
+$routes->post('/objectif/choisir', 'ObjectifController::choisir', ['filter' => 'role:user']);
 $routes->post('/profil/update', 'UserController::updatePoids', ['filter' => 'role:user']);
+$routes->get('/dashboard/regimes', 'UserController::regimes', ['filter' => 'role:user']);
+$routes->post('/dashboard/regimes/purchase', 'UserController::purchaseRegime', ['filter' => 'role:user']);
+$routes->get('/dashboard/sports', 'UserController::sports', ['filter' => 'role:user']);
+$routes->post('/dashboard/sports/start', 'UserController::startSport', ['filter' => 'role:user']);
 $routes->get('/admin', 'AdminController::dashboard', ['filter' => 'role:admin']);
 $routes->get('/admin/regimes', 'AdminController::regimes', ['filter' => 'role:admin']);
 $routes->get('/admin/sports', 'AdminController::sports', ['filter' => 'role:admin']);
 $routes->get('/admin/codes', 'AdminController::codes', ['filter' => 'role:admin']);
+$routes->post('/admin/codes/create', 'AdminController::createCode', ['filter' => 'role:admin']);
+$routes->post('/admin/codes/update', 'AdminController::updateCode', ['filter' => 'role:admin']);
+$routes->post('/admin/codes/delete', 'AdminController::deleteCode', ['filter' => 'role:admin']);
 
 $routes->post('/admin/categories/create', 'AdminController::createCategorie', ['filter' => 'role:admin']);
 $routes->post('/admin/categories/update', 'AdminController::updateCategorie', ['filter' => 'role:admin']);

@@ -28,6 +28,7 @@ class AuthController extends BaseController
             'id_user' => $user['id'],
             'role' => $user['role'] ?? 'user',
             'nom' => $user['name'] ?? '',
+            'email' => $user['email'] ?? '',
         ]);
 
         if (($user['role'] ?? 'user') === 'admin') {
