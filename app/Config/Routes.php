@@ -19,7 +19,8 @@ $routes->get('/register/step2', 'UserController::registerStep2');
 $routes->post('/register/step2', 'UserController::storeStep2');
 $routes->post('/user/check_email', 'UserController::checkEmail');
 
-$routes->get('/dashboard', 'UserController::dashboard', ['filter' => 'role:user']);
+$routes->get('/dashboard', 'UserController::profil', ['filter' => 'role:user']);
+$routes->post('/profil/update', 'UserController::updatePoids', ['filter' => 'role:user']);
 $routes->get('/admin', 'AdminController::dashboard', ['filter' => 'role:admin']);
 $routes->get('/admin/regimes', 'AdminController::regimes', ['filter' => 'role:admin']);
 $routes->get('/admin/sports', 'AdminController::sports', ['filter' => 'role:admin']);

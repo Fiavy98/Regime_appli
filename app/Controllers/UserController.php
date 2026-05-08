@@ -9,9 +9,98 @@ use App\Models\UserPortefeuileModel;
 
 class UserController extends BaseController
 {
-    public function dashboard()
+    public function profil()
     {
-        return view('dashboard');
+        $userId = (int) (session()->get('id_user') ?? 0);
+        if ($userId <= 0) {
+            return redirect()->to('/login');
+        }
+
+        $userBodyModel = new UserBodyModel();
+        $imcHistoryModel = new ImcHistoryModel();
+
+        $body = $userBodyModel
+            ->where('id_user', $userId)
+            ->orderBy('date', 'DESC')
+            ->first();
+
+        $history = $imcHistoryModel
+            ->where('id_user', $userId)
+            ->orderBy('date', 'ASC')
+            ->findAll();
+
+        $imc = null;
+        $imcLabel = '---';
+        if ($body && (float) $body['taille'] > 0) {
+            $imc = (float) $body['poids'] / ((float) $body['taille'] * (float) $body['taille']);
+            if ($imc < 18.5) {
+                $imcLabel = 'Maigre';
+            } elseif ($imc < 25) {
+                $imcLabel = 'Normal';
+            } elseif ($imc < 30) {
+                $imcLabel = 'Surpoids';
+            } else {
+                $imcLabel = 'Obesite';
+            }
+        }
+
+        $historyLabels = array_map(static function ($row) {
+            return $row['date'];
+        }, $history);
+        $historyValues = array_map(static function ($row) {
+            return (float) $row['imc'];
+        }, $history);
+
+        return view('profil', [
+            'body' => $body,
+            'imc' => $imc,
+            'imcLabel' => $imcLabel,
+            'historyLabels' => json_encode($historyLabels),
+            'historyValues' => json_encode($historyValues),
+        ]);
+    }
+
+    public function updatePoids()
+    {
+        $userId = (int) (session()->get('id_user') ?? 0);
+        if ($userId <= 0) {
+            return redirect()->to('/login');
+        }
+
+        $poids = (float) $this->request->getPost('poids');
+        if ($poids <= 0) {
+            return redirect()->to('/dashboard')->with('profil_error', 'Poids invalide.');
+        }
+
+        $userBodyModel = new UserBodyModel();
+        $imcHistoryModel = new ImcHistoryModel();
+
+        $body = $userBodyModel
+            ->where('id_user', $userId)
+            ->orderBy('date', 'DESC')
+            ->first();
+
+        if (!$body || (float) $body['taille'] <= 0) {
+            return redirect()->to('/dashboard')->with('profil_error', 'Taille introuvable.');
+        }
+
+        $now = date('Y-m-d H:i:s');
+        $taille = (float) $body['taille'];
+        $imc = $poids / ($taille * $taille);
+
+        $userBodyModel->update($body['id'], [
+            'poids' => $poids,
+            'date' => $now,
+        ]);
+
+        $imcHistoryModel->insert([
+            'id_user' => $userId,
+            'poids' => $poids,
+            'imc' => $imc,
+            'date' => $now,
+        ]);
+
+        return redirect()->to('/dashboard')->with('profil_success', 'Poids mis a jour.');
     }
 
     public function registerStep1()
