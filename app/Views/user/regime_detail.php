@@ -48,16 +48,20 @@ $basePrice = (float) ($selectedProgramme['prix'] ?? 0);
           </div>
         </div>
 
-        <form method="get" action="<?= base_url('/dashboard/regimes') ?>" class="regime-switcher">
-          <label class="form-label" for="program-select">Changer de programme</label>
-          <select id="program-select" class="input" name="id" onchange="this.form.submit()">
-            <?php foreach ($programmes as $item): ?>
-              <option value="<?= esc($item['id']) ?>" <?= $selectedProgramme && (int) $item['id'] === (int) $selectedProgramme['id'] ? 'selected' : '' ?>>
-                <?= esc($item['nom']) ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </form>
+        <div class="regime-actions-row">
+          <form method="get" action="<?= base_url('/dashboard/regimes') ?>" class="regime-switcher">
+            <label class="form-label" for="program-select">Changer de programme</label>
+            <select id="program-select" class="input" name="id" onchange="this.form.submit()">
+              <?php foreach ($programmes as $item): ?>
+                <option value="<?= esc($item['id']) ?>" <?= $selectedProgramme && (int) $item['id'] === (int) $selectedProgramme['id'] ? 'selected' : '' ?>>
+                  <?= esc($item['nom']) ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </form>
+
+          <a class="btn btn-secondary pdf-export-btn" href="<?= base_url('/dashboard/regimes/export') ?>" target="_blank">📄 Exporter en PDF</a>
+        </div>
       </section>
 
       <section class="user-cards">

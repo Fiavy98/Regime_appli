@@ -24,6 +24,7 @@ $routes->get('/objectif', 'ObjectifController::index', ['filter' => 'role:user']
 $routes->post('/objectif/choisir', 'ObjectifController::choisir', ['filter' => 'role:user']);
 $routes->post('/profil/update', 'UserController::updatePoids', ['filter' => 'role:user']);
 $routes->get('/dashboard/regimes', 'UserController::regimes', ['filter' => 'role:user']);
+$routes->get('/dashboard/regimes/export', 'UserController::exportRegimesPdf', ['filter' => 'role:user']);
 $routes->post('/dashboard/regimes/purchase', 'UserController::purchaseRegime', ['filter' => 'role:user']);
 $routes->get('/dashboard/sports', 'UserController::sports', ['filter' => 'role:user']);
 $routes->post('/dashboard/sports/start', 'UserController::startSport', ['filter' => 'role:user']);

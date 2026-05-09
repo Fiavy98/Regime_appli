@@ -12,6 +12,8 @@ use App\Models\UserBodyModel;
 use App\Models\UserModel;
 use App\Models\UserPortefeuileModel;
 use App\Services\UserDashboardService;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class UserController extends BaseController
 {
@@ -109,6 +111,39 @@ class UserController extends BaseController
             'userEmail' => $data['userEmail'],
             'badgeLabel' => $data['badgeLabel'],
         ]);
+    }
+
+    public function exportRegimesPdf()
+    {
+        $userId = (int) (session()->get('id_user') ?? 0);
+        if ($userId <= 0) {
+            return redirect()->to('/login');
+        }
+
+        $data = (new UserDashboardService())->getRegimeExportData($userId);
+
+        $html = view('user/regime_export_pdf', [
+            'user' => $data['user'],
+            'body' => $data['body'],
+            'programmes' => $data['programmes'],
+        ]);
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $options->set('defaultFont', 'DejaVu Sans');
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        $pdfOutput = $dompdf->output();
+        $fileName = 'NutriPlan_Regimes_' . date('Ymd_His') . '.pdf';
+
+        return $this->response
+            ->setHeader('Content-Type', 'application/pdf')
+            ->setHeader('Content-Disposition', 'attachment; filename="' . $fileName . '"')
+            ->setBody($pdfOutput);
     }
 
     public function purchaseRegime()
