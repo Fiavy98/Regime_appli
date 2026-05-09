@@ -34,11 +34,11 @@
         <form method="post" action="<?= base_url('/login') ?>" class="login-form">
           <div class="field">
             <label class="form-label">Adresse email</label>
-            <input class="input" type="email" name="email" placeholder="jean@exemple.com" required>
+            <input class="input" type="email" name="email" value="andry@gmail.com" required>
           </div>
           <div class="field">
             <label class="form-label">Mot de passe</label>
-            <input class="input" type="password" name="password" placeholder="Votre mot de passe" required>
+            <input class="input" type="password" name="password" value="pass123" required>
           </div>
           <button class="btn btn-primary login-submit" type="submit">Se connecter →</button>
         </form>
