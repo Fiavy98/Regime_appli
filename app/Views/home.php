@@ -20,7 +20,7 @@
         </p>
         <div class="nav-actions hero-actions">
           <a class="btn btn-primary" href="<?= base_url('/register/step1') ?>">Commencer gratuitement →</a>
-          <a class="btn btn-outline" href="#how-it-works">Calculer mon IMC</a>
+          <a class="btn btn-outline" href="#imc">Calculer mon IMC</a>
         </div>
         <div class="hero-stats">
           <div>

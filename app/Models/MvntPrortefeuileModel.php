@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MvntPortefeuilleModel extends Model
+class MvntPrortefeuileModel extends Model
 {
     protected $table = 'MvntPortefeuile';
     protected $primaryKey = 'id';

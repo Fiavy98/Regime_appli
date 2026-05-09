@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserPortefeuilleModel extends Model
+class UserPortefeuileModel extends Model
 {
     protected $table = 'userPortefeuile';
     protected $primaryKey = 'id';
