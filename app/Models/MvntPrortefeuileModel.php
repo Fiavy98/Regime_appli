@@ -13,17 +13,17 @@ class MvntPrortefeuileModel extends Model
     
     public function getHistorique(int $userId, int $limit = 50): array
     {
-        return $this->select('MvntPortefeuile.*, userPortefeuile.id_user')
-            ->join('userPortefeuile', 'userPortefeuile.id = MvntPortefeuile.id_userPortefeuile')
+        return $this->select('MvntPrortefeuile.*, userPortefeuile.id_user')
+            ->join('userPortefeuile', 'userPortefeuile.id = MvntPrortefeuile.id_userPortefeuile')
             ->where('userPortefeuile.id_user', $userId)
-            ->orderBy('date', 'DESC')
+            ->orderBy('MvntPrortefeuile.date', 'DESC')
             ->limit($limit)
             ->findAll();
     }
     
     public function addTransaction(int $userId, string $type, float $montant): bool
     {
-        $portefeuilleModel = new UserPortefeuilleModel();
+        $portefeuilleModel = new UserPortefeuileModel();
         $portefeuille = $portefeuilleModel->where('id_user', $userId)->first();
         
         if (!$portefeuille) {

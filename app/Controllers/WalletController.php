@@ -9,7 +9,7 @@ use App\Models\UserGoldModel;
 
 class WalletController extends BaseController
 {
-    private const GOLD_PRICE = 25000; // Prix de l'abonnement Gold en Ar
+    private const GOLD_PRICE = 25000; 
     
     public function index()
     {
@@ -161,7 +161,7 @@ class WalletController extends BaseController
         }
         
         $goldModel = new UserGoldModel();
-        $portefeuilleModel = new UserPortefeuilleModel();
+        $portefeuilleModel = new UserPortefeuileModel();
         
         return view('gold', [
             'hasGold' => $goldModel->hasGold($userId),
