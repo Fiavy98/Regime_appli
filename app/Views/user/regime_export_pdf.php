@@ -33,6 +33,7 @@
 <body>
   <div class="pdf-wrap">
     <div class="pdf-header">
+      <img src="<?= base_url('assets/images/logo.svg') ?>" alt="NutriPlan Logo" style="width: 80px; height: 80px; margin-bottom: 10px;">
       <h1>Rapport des régimes NutriPlan</h1>
       <p>Résumé personnalisé et détails des programmes enregistrés</p>
     </div>
