@@ -143,12 +143,27 @@ class UserDashboardService
             ->first();
         $objectifId = (int) ($body['id_objectif'] ?? 0);
 
+        $imcRecord = (new ImcHistoryModel())
+            ->where('id_user', $userId)
+            ->orderBy('date', 'DESC')
+            ->first();
+        $imcUser = $imcRecord ? (float) $imcRecord['imc'] : null;
+        if ($imcUser === null && !empty($body['taille']) && !empty($body['poids'])) {
+            $taille = (float) $body['taille'];
+            $imcUser = $taille > 0 ? (float) $body['poids'] / ($taille * $taille) : null;
+        }
+
         $programmeQuery = $programmeModel
             ->select('programmeRegime.*, objectif.name as objectif_label')
             ->join('objectif', 'objectif.id = programmeRegime.id_objectif', 'left')
             ->orderBy('programmeRegime.nom', 'ASC');
         if ($objectifId > 0) {
             $programmeQuery->where('programmeRegime.id_objectif', $objectifId);
+        }
+        if ($imcUser !== null) {
+            $programmeQuery
+                ->where('programmeRegime.imc_min <=', $imcUser)
+                ->where('programmeRegime.imc_max >=', $imcUser);
         }
         $programmes = $programmeQuery->findAll();
 
@@ -184,6 +199,12 @@ class UserDashboardService
         $wallet = $walletModel->where('id_user', $userId)->first();
         $hasGold = (bool) $goldModel->where('id_user', $userId)->first();
 
+        $userProgramme = (new UserProgrammeModel())
+            ->where('id_user', $userId)
+            ->where('id_programmeRegime', $selectedId)
+            ->first();
+        $isPurchased = (bool) $userProgramme;
+
         $discountRate = $hasGold ? 0.15 : 0.0;
         $price = $programme ? (float) $programme['prix'] : 0.0;
         $discount = $price * $discountRate;
@@ -195,6 +216,7 @@ class UserDashboardService
             'meals' => $meals,
             'wallet' => $wallet,
             'hasGold' => $hasGold,
+            'isPurchased' => $isPurchased,
             'discount' => $discount,
             'finalPrice' => $finalPrice,
             'objectifLabel' => $body['objectif_label'] ?? null,
