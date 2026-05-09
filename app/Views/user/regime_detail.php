@@ -86,61 +86,73 @@ $isPurchased = (bool) ($isPurchased ?? false);
 
       <section class="user-grid">
         <div class="panel">
-          <div class="panel-head">
-            <h3>Composition du programme</h3>
+          <div class="panel-head section-head">
+            <div>
+              <span class="section-label">Composition du programme</span>
+              <h3 class="section-title">4 repas</h3>
+            </div>
             <span class="tag success"><?= count($selectedMeals) ?> repas</span>
           </div>
 
           <div class="meal-stack">
             <?php foreach ($selectedMeals as $type => $items): ?>
               <div class="meal-card">
-                <h4><?= esc(str_replace('_', ' ', strtolower($type))) ?></h4>
+                <div class="meal-card-head">
+                  <h4><?= esc(ucwords(str_replace('_', ' ', strtolower($type)))) ?></h4>
+                  <span class="meal-badge"><?= esc(count($items)) ?> aliments</span>
+                </div>
+
                 <?php if (empty($items)): ?>
                   <p class="panel-note">Aucun aliment pour ce repas.</p>
+                <?php else: ?>
+                  <?php foreach ($items as $item): ?>
+                    <div class="meal-item">
+                      <div>
+                        <strong><?= esc($item['nom'] ?? '') ?></strong>
+                        <small><?= esc($item['quantite_g'] ?? 0) ?> g</small>
+                      </div>
+                      <div class="meal-macros">
+                        <span><?= esc($item['calories'] ?? 0) ?> kcal</span>
+                        <span>P: <?= esc($item['proteines'] ?? 0) ?>g</span>
+                        <span>G: <?= esc($item['glucides'] ?? 0) ?>g</span>
+                        <span>L: <?= esc($item['lipides'] ?? 0) ?>g</span>
+                      </div>
+                    </div>
+                  <?php endforeach; ?>
                 <?php endif; ?>
-                <?php foreach ($items as $item): ?>
-                  <div class="meal-item">
-                    <div>
-                      <strong><?= esc($item['nom'] ?? '') ?></strong>
-                      <small><?= esc($item['quantite_g'] ?? 0) ?> g</small>
-                    </div>
-                    <div class="meal-macros">
-                      <span><?= esc($item['calories'] ?? 0) ?> kcal</span>
-                      <span>P: <?= esc($item['proteines'] ?? 0) ?>g</span>
-                      <span>G: <?= esc($item['glucides'] ?? 0) ?>g</span>
-                      <span>L: <?= esc($item['lipides'] ?? 0) ?>g</span>
-                    </div>
-                  </div>
-                <?php endforeach; ?>
               </div>
             <?php endforeach; ?>
           </div>
         </div>
 
-        <div class="panel">
-          <div class="panel-head">
-            <h3><?= $isPurchased ? 'Achat effectue' : 'Passer a l\'achat' ?></h3>
-            <span class="tag">Solde: <?= number_format($walletAmount, 0, ',', ' ') ?> Ar</span>
-          </div>
-
+        <div class="panel purchase-panel">
           <?php if ($isPurchased): ?>
-            <div class="purchase-success-box">
+            <div class="purchase-success-panel">
               <div class="purchase-success-icon">✓</div>
-              <div>
-                <h4>Achat effectue</h4>
-                <p>Vous avez deja achete ce programme. Bon courage pour votre suivi !</p>
+              <div class="purchase-success-content">
+                <span class="section-label">Statut du programme</span>
+                <h3 class="section-title">Achat déjà réalisé</h3>
+                <p>Ce régime est déjà actif. Continuez votre suivi et commencez dès aujourd’hui votre plan alimentaire.</p>
               </div>
             </div>
           <?php else: ?>
-            <p class="panel-note">La reduction Gold est appliquee automatiquement si ton compte est actif.</p>
+            <div class="panel-head section-head">
+              <div>
+                <span class="section-label">Passer à l’achat</span>
+                <h3 class="section-title">Votre prochaine étape</h3>
+              </div>
+              <span class="tag">Solde: <?= number_format($walletAmount, 0, ',', ' ') ?> Ar</span>
+            </div>
 
-            <div class="price-box">
+            <p class="panel-note">La réduction Gold est appliquée automatiquement si ton compte est actif.</p>
+
+            <div class="price-box purchase-price-box">
               <div class="price-row">
                 <span>Prix public</span>
                 <strong><?= number_format($basePrice, 0, ',', ' ') ?> Ar</strong>
               </div>
               <div class="price-row">
-                <span>Reduction</span>
+                <span>Réduction Gold</span>
                 <strong>- <?= number_format((float) ($discount ?? 0), 0, ',', ' ') ?> Ar</strong>
               </div>
               <div class="price-total">
@@ -151,7 +163,7 @@ $isPurchased = (bool) ($isPurchased ?? false);
 
             <form method="post" action="<?= base_url('/dashboard/regimes/purchase') ?>" class="purchase-form">
               <input type="hidden" name="id_programmeRegime" value="<?= esc($selectedProgramme['id'] ?? 0) ?>">
-              <button class="btn btn-primary full" type="submit" <?= empty($selectedProgramme) ? 'disabled' : '' ?>>Acheter ce regime</button>
+              <button class="btn btn-primary full" type="submit" <?= empty($selectedProgramme) ? 'disabled' : '' ?>>Acheter ce régime</button>
             </form>
           <?php endif; ?>
         </div>
