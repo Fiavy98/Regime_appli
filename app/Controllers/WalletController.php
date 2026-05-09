@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserPortefeuilleModel;
-use App\Models\MvntPortefeuilleModel;
+use App\Models\MvntPrortefeuileModel;
 use App\Models\CodeModel;
 use App\Models\UserGoldModel;
 
@@ -19,7 +19,7 @@ class WalletController extends BaseController
         }
         
         $portefeuilleModel = new UserPortefeuilleModel();
-        $mvntModel = new MvntPortefeuilleModel();
+        $mvntModel = new MvntPrortefeuileModel();
         $goldModel = new UserGoldModel();
         
         $solde = $portefeuilleModel->getSolde($userId);
@@ -83,7 +83,7 @@ class WalletController extends BaseController
         $portefeuilleModel->crediter($userId, $montant);
         
         // Ajouter la transaction
-        $mvntModel = new MvntPortefeuilleModel();
+        $mvntModel = new MvntPrortefeuileModel();
         $mvntModel->addTransaction($userId, 'credit', $montant);
         
         $db->transComplete();
@@ -135,7 +135,7 @@ class WalletController extends BaseController
         $portefeuilleModel->debiter($userId, self::GOLD_PRICE);
         
         // Ajouter la transaction de débit
-        $mvntModel = new MvntPortefeuilleModel();
+        $mvntModel = new MvntPrortefeuileModel();
         $mvntModel->addTransaction($userId, 'debit', self::GOLD_PRICE);
         
         // Activer Gold

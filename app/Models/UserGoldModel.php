@@ -8,7 +8,7 @@ class UserGoldModel extends Model
 {
     protected $table = 'userGold';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['id_user', 'prix_payé', 'date_achat'];
+    protected $allowedFields = ['id_user', 'id_gold', 'date_achat'];
     protected $useTimestamps = false;
     
     public function hasGold(int $userId): bool
@@ -30,7 +30,7 @@ class UserGoldModel extends Model
         
         return $this->insert([
             'id_user' => $userId,
-            'prix_payé' => $prix,
+            'id_gold' => 1, // Assuming gold id 1
             'date_achat' => date('Y-m-d H:i:s')
         ]);
     }

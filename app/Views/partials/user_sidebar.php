@@ -33,7 +33,6 @@ $hasGold = $hasGold ?? false;
     <a class="sidebar-link <?= $active === 'objectif' ? 'active' : '' ?>" href="<?= base_url('/objectif') ?>">🎯 Choisir mon objectif</a>
     <a class="sidebar-link <?= $active === 'regimes' ? 'active' : '' ?>" href="<?= base_url('/dashboard/regimes') ?>">🥗 Mes régimes</a>
     <a class="sidebar-link <?= $active === 'sports' ? 'active' : '' ?>" href="<?= base_url('/dashboard/sports') ?>">🏃 Activités sportives</a>
-    <a class="sidebar-link <?= $active === 'wallet' ? 'active' : '' ?>" href="<?= base_url('/wallet') ?>">👛 Mon portefeuille</a>
     <a class="sidebar-link <?= $active === 'gold' ? 'active' : '' ?>" href="<?= base_url('/gold') ?>">👑 Abonnement Gold</a>
     <a class="sidebar-link" href="#">📄 Exporter PDF</a>
   </div>
