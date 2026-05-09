@@ -9,6 +9,7 @@ use App\Models\ProgrammeAlimentModel;
 use App\Models\ProgrammeRegimeModel;
 use App\Models\UserBodyModel;
 use App\Models\UserGoldModel;
+use App\Models\UserModel;
 use App\Models\UserPortefeuileModel;
 use App\Models\UserProgrammeModel;
 
@@ -222,6 +223,70 @@ class UserDashboardService
             'objectifLabel' => $body['objectif_label'] ?? null,
             'userEmail' => session()->get('email') ?? 'Compte actif',
             'badgeLabel' => $hasGold ? 'Gold' : 'Standard',
+        ];
+    }
+
+    public function getRegimeExportData(int $userId): array
+    {
+        $userModel = new UserModel();
+        $body = (new UserBodyModel())
+            ->select('userBody.*, objectif.name as objectif_label')
+            ->join('objectif', 'objectif.id = userBody.id_objectif', 'left')
+            ->where('id_user', $userId)
+            ->orderBy('date', 'DESC')
+            ->first();
+
+        $user = $userModel->find($userId);
+
+        $programmes = (new UserProgrammeModel())
+            ->select('userProgramme.*, programmeRegime.nom as regime_nom, programmeRegime.duree_jours, programmeRegime.prix as prix_regime, programmeRegime.imc_min, programmeRegime.imc_max, programmeRegime.variation_poids, objectif.name as objectif_label')
+            ->join('programmeRegime', 'programmeRegime.id = userProgramme.id_programmeRegime', 'left')
+            ->join('objectif', 'objectif.id = programmeRegime.id_objectif', 'left')
+            ->where('userProgramme.id_user', $userId)
+            ->orderBy('userProgramme.date_debut', 'DESC')
+            ->findAll();
+
+        $programmeIds = array_map(static fn ($item) => (int) ($item['id_programmeRegime'] ?? 0), $programmes);
+        $compositions = [];
+
+        if (!empty($programmeIds)) {
+            $rows = (new ProgrammeAlimentModel())
+                ->select('programmeAliment.*, aliment.nom as aliment_nom, aliment.calories_pour_100g, aliment.proteines_g, aliment.glucides_g, aliment.lipides_g')
+                ->join('aliment', 'aliment.id = programmeAliment.id_aliment', 'left')
+                ->whereIn('programmeAliment.id_programmeRegime', $programmeIds)
+                ->orderBy('programmeAliment.id_programmeRegime', 'ASC')
+                ->orderBy('programmeAliment.type_repas', 'ASC')
+                ->findAll();
+
+            foreach ($rows as $row) {
+                $programId = (int) ($row['id_programmeRegime'] ?? 0);
+                $type = $row['type_repas'] ?? 'COLLATION';
+                $quantity = (float) ($row['quantite_g'] ?? 0);
+                $factor = $quantity > 0 ? $quantity / 100 : 0;
+                $row['calories'] = round(((float) ($row['calories_pour_100g'] ?? 0)) * $factor);
+                $row['proteines'] = round(((float) ($row['proteines_g'] ?? 0)) * $factor, 1);
+                $row['glucides'] = round(((float) ($row['glucides_g'] ?? 0)) * $factor, 1);
+                $row['lipides'] = round(((float) ($row['lipides_g'] ?? 0)) * $factor, 1);
+
+                if (!isset($compositions[$programId])) {
+                    $compositions[$programId] = [];
+                }
+                if (!isset($compositions[$programId][$type])) {
+                    $compositions[$programId][$type] = [];
+                }
+                $compositions[$programId][$type][] = $row;
+            }
+        }
+
+        foreach ($programmes as &$programme) {
+            $programmeId = (int) ($programme['id_programmeRegime'] ?? 0);
+            $programme['compositions'] = $compositions[$programmeId] ?? [];
+        }
+
+        return [
+            'user' => $user,
+            'body' => $body,
+            'programmes' => $programmes,
         ];
     }
 

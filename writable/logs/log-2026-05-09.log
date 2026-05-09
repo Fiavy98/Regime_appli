@@ -3522,10 +3522,14 @@ in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
 13 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
 14 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
 <<<<<<< HEAD
+<<<<<<< HEAD
 ERROR - 2026-05-09 19:08:27 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
 =======
 ERROR - 2026-05-09 17:02:35 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
 >>>>>>> feature/Achats
+=======
+ERROR - 2026-05-09 18:56:29 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
+>>>>>>> feature/Export
 Stack trace:
 #0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php(201): mysqli->real_connect()
 #1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
@@ -3534,12 +3538,17 @@ Stack trace:
 #4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
 #5 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
 <<<<<<< HEAD
+<<<<<<< HEAD
 #6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/AuthController.php(20): CodeIgniter\BaseModel->first()
 #7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\AuthController->authenticate()
 =======
 #6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/WalletController.php(65): CodeIgniter\BaseModel->first()
 #7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\WalletController->applyCode()
 >>>>>>> feature/Achats
+=======
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/AuthController.php(20): CodeIgniter\BaseModel->first()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\AuthController->authenticate()
+>>>>>>> feature/Export
 #8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
 #9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
 #10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
@@ -3555,18 +3564,24 @@ Stack trace:
 #3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
 #4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
 <<<<<<< HEAD
+<<<<<<< HEAD
 #5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/AuthController.php(20): CodeIgniter\BaseModel->first()
 #6 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\AuthController->authenticate()
 =======
 #5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/WalletController.php(65): CodeIgniter\BaseModel->first()
 #6 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\WalletController->applyCode()
 >>>>>>> feature/Achats
+=======
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/AuthController.php(20): CodeIgniter\BaseModel->first()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\AuthController->authenticate()
+>>>>>>> feature/Export
 #7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
 #8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
 #9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
 #10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
 #11 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
 #12 {main}
+<<<<<<< HEAD
 <<<<<<< HEAD
 CRITICAL - 2026-05-09 19:08:27 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
 Main connection [MySQLi]: No such file or directory
@@ -3576,11 +3591,17 @@ CRITICAL - 2026-05-09 17:02:35 --> CodeIgniter\Database\Exceptions\DatabaseExcep
 Main connection [MySQLi]: No such file or directory
 [Method: POST, Route: wallet/appliquer_code]
 >>>>>>> feature/Achats
+=======
+CRITICAL - 2026-05-09 18:56:29 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No such file or directory
+[Method: POST, Route: login]
+>>>>>>> feature/Export
 in SYSTEMPATH/Database/BaseConnection.php on line 606.
  1 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
  2 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
  3 SYSTEMPATH/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
  4 SYSTEMPATH/BaseModel.php(714): CodeIgniter\Model->doFirst()
+<<<<<<< HEAD
 <<<<<<< HEAD
  5 APPPATH/Controllers/AuthController.php(20): CodeIgniter\BaseModel->first()
  6 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AuthController->authenticate()
@@ -3588,11 +3609,16 @@ in SYSTEMPATH/Database/BaseConnection.php on line 606.
  5 APPPATH/Controllers/WalletController.php(65): CodeIgniter\BaseModel->first()
  6 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\WalletController->applyCode()
 >>>>>>> feature/Achats
+=======
+ 5 APPPATH/Controllers/AuthController.php(20): CodeIgniter\BaseModel->first()
+ 6 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AuthController->authenticate()
+>>>>>>> feature/Export
  7 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
  8 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
  9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
 10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
 11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 CRITICAL - 2026-05-09 18:01:15 --> Error: Class "App\Controllers\AchatRegimeDetailModel" not found
@@ -3605,6 +3631,9 @@ in APPPATH/Controllers/UserController.php on line 156.
  5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
  6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
 ERROR - 2026-05-09 19:10:58 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
+=======
+ERROR - 2026-05-09 19:01:20 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
+>>>>>>> feature/Export
 Stack trace:
 #0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php(201): mysqli->real_connect()
 #1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
@@ -3612,7 +3641,11 @@ Stack trace:
 #3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
 #4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
 #5 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+<<<<<<< HEAD
 #6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(143): CodeIgniter\BaseModel->first()
+=======
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+>>>>>>> feature/Export
 #7 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
 #8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\UserController->regimes()
 #9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
@@ -3629,7 +3662,11 @@ Stack trace:
 #2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
 #3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
 #4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+<<<<<<< HEAD
 #5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(143): CodeIgniter\BaseModel->first()
+=======
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+>>>>>>> feature/Export
 #6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
 #7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\UserController->regimes()
 #8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
@@ -3638,7 +3675,11 @@ Stack trace:
 #11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
 #12 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
 #13 {main}
+<<<<<<< HEAD
 CRITICAL - 2026-05-09 19:10:58 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+=======
+CRITICAL - 2026-05-09 19:01:20 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+>>>>>>> feature/Export
 Main connection [MySQLi]: No such file or directory
 [Method: GET, Route: dashboard/regimes]
 in SYSTEMPATH/Database/BaseConnection.php on line 606.
@@ -3646,7 +3687,11 @@ in SYSTEMPATH/Database/BaseConnection.php on line 606.
  2 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
  3 SYSTEMPATH/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
  4 SYSTEMPATH/BaseModel.php(714): CodeIgniter\Model->doFirst()
+<<<<<<< HEAD
  5 APPPATH/Services/UserDashboardService.php(143): CodeIgniter\BaseModel->first()
+=======
+ 5 APPPATH/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+>>>>>>> feature/Export
  6 APPPATH/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
  7 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\UserController->regimes()
  8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
@@ -3654,6 +3699,7 @@ in SYSTEMPATH/Database/BaseConnection.php on line 606.
 10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
 11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
 12 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+<<<<<<< HEAD
 >>>>>>> feature/Achats
 CRITICAL - 2026-05-09 19:14:53 --> ErrorException: session_start(): Failed to decode session object. Session has been destroyed
 [Method: GET, Route: dashboard/regimes]
@@ -3677,3 +3723,205 @@ in SYSTEMPATH/Session/Session.php on line 625.
 17 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
 18 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
 19 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+=======
+ERROR - 2026-05-09 19:01:21 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php(201): mysqli->real_connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#13 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:231
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#13 {main}
+CRITICAL - 2026-05-09 19:01:21 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No such file or directory
+[Method: GET, Route: dashboard/regimes]
+in SYSTEMPATH/Database/BaseConnection.php on line 606.
+ 1 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+ 3 SYSTEMPATH/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH/BaseModel.php(714): CodeIgniter\Model->doFirst()
+ 5 APPPATH/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+ 6 APPPATH/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+12 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-05-09 19:01:21 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php(201): mysqli->real_connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#13 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:231
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#13 {main}
+CRITICAL - 2026-05-09 19:01:21 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No such file or directory
+[Method: GET, Route: dashboard/regimes]
+in SYSTEMPATH/Database/BaseConnection.php on line 606.
+ 1 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+ 3 SYSTEMPATH/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH/BaseModel.php(714): CodeIgniter\Model->doFirst()
+ 5 APPPATH/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+ 6 APPPATH/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+12 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-05-09 19:01:21 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php(201): mysqli->real_connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#13 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:231
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#13 {main}
+CRITICAL - 2026-05-09 19:01:21 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No such file or directory
+[Method: GET, Route: dashboard/regimes]
+in SYSTEMPATH/Database/BaseConnection.php on line 606.
+ 1 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+ 3 SYSTEMPATH/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH/BaseModel.php(714): CodeIgniter\Model->doFirst()
+ 5 APPPATH/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+ 6 APPPATH/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+12 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-05-09 19:01:22 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php(201): mysqli->real_connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#13 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:231
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(714): CodeIgniter\Model->doFirst()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#13 {main}
+CRITICAL - 2026-05-09 19:01:22 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No such file or directory
+[Method: GET, Route: dashboard/regimes]
+in SYSTEMPATH/Database/BaseConnection.php on line 606.
+ 1 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+ 3 SYSTEMPATH/Model.php(295): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH/BaseModel.php(714): CodeIgniter\Model->doFirst()
+ 5 APPPATH/Services/UserDashboardService.php(144): CodeIgniter\BaseModel->first()
+ 6 APPPATH/Controllers/UserController.php(100): App\Services\UserDashboardService->getRegimeData()
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\UserController->regimes()
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+12 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+>>>>>>> feature/Export
