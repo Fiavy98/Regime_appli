@@ -105,6 +105,7 @@ class UserController extends BaseController
             'meals' => $data['meals'],
             'wallet' => $data['wallet'],
             'hasGold' => $data['hasGold'],
+            'isPurchased' => $data['isPurchased'],
             'discount' => $data['discount'],
             'finalPrice' => $data['finalPrice'],
             'objectifLabel' => $data['objectifLabel'],

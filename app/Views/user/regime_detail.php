@@ -3,6 +3,7 @@ $selectedProgramme = $programme ?? null;
 $selectedMeals = $meals ?? [];
 $walletAmount = (float) ($wallet['montant'] ?? 0);
 $basePrice = (float) ($selectedProgramme['prix'] ?? 0);
+$isPurchased = (bool) ($isPurchased ?? false);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -118,31 +119,41 @@ $basePrice = (float) ($selectedProgramme['prix'] ?? 0);
 
         <div class="panel">
           <div class="panel-head">
-            <h3>Passer a l'achat</h3>
+            <h3><?= $isPurchased ? 'Achat effectue' : 'Passer a l\'achat' ?></h3>
             <span class="tag">Solde: <?= number_format($walletAmount, 0, ',', ' ') ?> Ar</span>
           </div>
 
-          <p class="panel-note">La reduction Gold est appliquee automatiquement si ton compte est actif.</p>
+          <?php if ($isPurchased): ?>
+            <div class="purchase-success-box">
+              <div class="purchase-success-icon">✓</div>
+              <div>
+                <h4>Achat effectue</h4>
+                <p>Vous avez deja achete ce programme. Bon courage pour votre suivi !</p>
+              </div>
+            </div>
+          <?php else: ?>
+            <p class="panel-note">La reduction Gold est appliquee automatiquement si ton compte est actif.</p>
 
-          <div class="price-box">
-            <div class="price-row">
-              <span>Prix public</span>
-              <strong><?= number_format($basePrice, 0, ',', ' ') ?> Ar</strong>
+            <div class="price-box">
+              <div class="price-row">
+                <span>Prix public</span>
+                <strong><?= number_format($basePrice, 0, ',', ' ') ?> Ar</strong>
+              </div>
+              <div class="price-row">
+                <span>Reduction</span>
+                <strong>- <?= number_format((float) ($discount ?? 0), 0, ',', ' ') ?> Ar</strong>
+              </div>
+              <div class="price-total">
+                <span>Prix final</span>
+                <strong><?= number_format((float) ($finalPrice ?? 0), 0, ',', ' ') ?> Ar</strong>
+              </div>
             </div>
-            <div class="price-row">
-              <span>Reduction</span>
-              <strong>- <?= number_format((float) ($discount ?? 0), 0, ',', ' ') ?> Ar</strong>
-            </div>
-            <div class="price-total">
-              <span>Prix final</span>
-              <strong><?= number_format((float) ($finalPrice ?? 0), 0, ',', ' ') ?> Ar</strong>
-            </div>
-          </div>
 
-          <form method="post" action="<?= base_url('/dashboard/regimes/purchase') ?>" class="purchase-form">
-            <input type="hidden" name="id_programmeRegime" value="<?= esc($selectedProgramme['id'] ?? 0) ?>">
-            <button class="btn btn-primary full" type="submit" <?= empty($selectedProgramme) ? 'disabled' : '' ?>>Acheter ce regime</button>
-          </form>
+            <form method="post" action="<?= base_url('/dashboard/regimes/purchase') ?>" class="purchase-form">
+              <input type="hidden" name="id_programmeRegime" value="<?= esc($selectedProgramme['id'] ?? 0) ?>">
+              <button class="btn btn-primary full" type="submit" <?= empty($selectedProgramme) ? 'disabled' : '' ?>>Acheter ce regime</button>
+            </form>
+          <?php endif; ?>
         </div>
       </section>
     </main>

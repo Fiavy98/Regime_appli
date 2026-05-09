@@ -199,6 +199,12 @@ class UserDashboardService
         $wallet = $walletModel->where('id_user', $userId)->first();
         $hasGold = (bool) $goldModel->where('id_user', $userId)->first();
 
+        $userProgramme = (new UserProgrammeModel())
+            ->where('id_user', $userId)
+            ->where('id_programmeRegime', $selectedId)
+            ->first();
+        $isPurchased = (bool) $userProgramme;
+
         $discountRate = $hasGold ? 0.15 : 0.0;
         $price = $programme ? (float) $programme['prix'] : 0.0;
         $discount = $price * $discountRate;
@@ -210,6 +216,7 @@ class UserDashboardService
             'meals' => $meals,
             'wallet' => $wallet,
             'hasGold' => $hasGold,
+            'isPurchased' => $isPurchased,
             'discount' => $discount,
             'finalPrice' => $finalPrice,
             'objectifLabel' => $body['objectif_label'] ?? null,
