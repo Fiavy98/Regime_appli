@@ -96,7 +96,8 @@ $isPurchased = (bool) ($isPurchased ?? false);
 
           <div class="meal-stack">
             <?php foreach ($selectedMeals as $type => $items): ?>
-              <div class="meal-card">
+              <?php $mealClass = 'meal-card--' . esc(strtolower(str_replace('_', '-', $type))); ?>
+              <div class="meal-card <?= $mealClass ?>">
                 <div class="meal-card-head">
                   <?php
                     $mealTypeLabel = esc(ucwords(str_replace('_', ' ', strtolower($type))));
