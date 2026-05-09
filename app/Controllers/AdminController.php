@@ -14,388 +14,203 @@ use App\Services\AdminDashboardService;
 
 class AdminController extends BaseController
 {
-    public function dashboard()
+     public function dashboard()
     {
+        $db = \Config\Database::connect();
+        
+        // Statistiques globales
+        $userModel = new UserModel();
+        $usersByRole = $userModel->select('role, COUNT(*) as count')->groupBy('role')->findAll();
+        
+        $achatModel = new AchatRegimeModel();
+        $revenusTotaux = $achatModel->selectSum('prix_total')->first()['prix_total'] ?? 0;
+        
+        $goldModel = new UserGoldModel();
+        $nbGold = $goldModel->countAllResults();
+        
+        // Ventes par régime
+        $ventesParRegime = $db->table('achatRegimeDetail')
+            ->select('programmeRegime.nom, COUNT(*) as nb_ventes, SUM(achatRegimeDetail.prix_unitaire) as total')
+            ->join('programmeRegime', 'programmeRegime.id = achatRegimeDetail.id_programmeRegime')
+            ->groupBy('programmeRegime.id')
+            ->orderBy('nb_ventes', 'DESC')
+            ->limit(5)
+            ->get()
+            ->getResultArray();
+        
+        // Graphique mensuel (inscriptions vs achats)
+        $monthlyData = $this->getMonthlyStats();
+        
+        // Données du service existant
         $data = (new AdminDashboardService())->getDashboardData(
             (string) ($this->request->getGet('period') ?? 'month')
         );
-
-        return view('admin/dashboard', [
-            'period' => $data['period'],
-            'usersTotal' => $data['usersTotal'],
-            'usersCurrent' => $data['usersCurrent'],
-            'revenusCurrent' => $data['revenusCurrent'],
-            'goldCurrent' => $data['goldCurrent'],
-            'regimesCurrent' => $data['regimesCurrent'],
-            'growthUsers' => $data['growthUsers'],
-            'growthRevenus' => $data['growthRevenus'],
-            'growthGold' => $data['growthGold'],
-            'growthRegimes' => $data['growthRegimes'],
-            'monthLabels' => $data['monthLabels'],
-            'inscriptions' => $data['inscriptions'],
-            'ventes' => $data['ventes'],
-            'ventesObjectif' => $data['ventesObjectif'],
-            'totalObjectiveSales' => $data['totalObjectiveSales'],
-            'ventesObjectifLabels' => $data['ventesObjectifLabels'],
-            'ventesObjectifValues' => $data['ventesObjectifValues'],
-            'achats' => $data['achats'],
-            'codes' => $data['codes'],
-        ]);
+        
+        return view('admin/dashboard', array_merge($data, [
+            'usersByRole' => $usersByRole,
+            'revenusTotaux' => $revenusTotaux,
+            'nbGold' => $nbGold,
+            'ventesParRegime' => $ventesParRegime,
+            'monthLabels' => $monthlyData['labels'],
+            'inscriptionsData' => $monthlyData['inscriptions'],
+            'achatsData' => $monthlyData['achats']
+        ]));
     }
-
-    public function regimes()
+    
+    private function getMonthlyStats(): array
     {
-        $programmeModel = new ProgrammeRegimeModel();
-        $objectifModel = new ObjectifModel();
-        $compositionModel = new ProgrammeAlimentModel();
-        $alimentModel = new AlimentModel();
-
-        $programmes = $programmeModel
-            ->select('programmeRegime.*, objectif.name as objectif_label')
-            ->join('objectif', 'objectif.id = programmeRegime.id_objectif', 'left')
-            ->orderBy('programmeRegime.nom', 'ASC')
-            ->findAll();
-        $objectifs = $objectifModel->orderBy('id', 'ASC')->findAll();
-        $aliments = $alimentModel->select('aliment.*, categorie.libele as categorie_label')
-            ->join('categorie', 'categorie.id = aliment.id_categorie', 'left')
-            ->orderBy('aliment.nom', 'ASC')
-            ->findAll();
-
-        $selectedId = (int) ($this->request->getGet('id') ?? 0);
-        if ($selectedId <= 0 && !empty($programmes)) {
-            $selectedId = (int) $programmes[0]['id'];
+        $db = \Config\Database::connect();
+        $months = [];
+        $inscriptions = [];
+        $achats = [];
+        
+        for ($i = 5; $i >= 0; $i--) {
+            $month = date('Y-m', strtotime("-$i months"));
+            $months[] = date('M Y', strtotime("-$i months"));
+            
+            // Inscriptions du mois
+            $inscriptionsCount = $db->table('user')
+                ->where('MONTH(created_at)', date('m', strtotime($month)))
+                ->where('YEAR(created_at)', date('Y', strtotime($month)))
+                ->countAllResults();
+            $inscriptions[] = $inscriptionsCount;
+            
+            // Achats du mois
+            $achatsCount = $db->table('achatRegime')
+                ->where('MONTH(date_achat)', date('m', strtotime($month)))
+                ->where('YEAR(date_achat)', date('Y', strtotime($month)))
+                ->countAllResults();
+            $achats[] = $achatsCount;
         }
-
-        $programme = null;
-        foreach ($programmes as $item) {
-            if ((int) $item['id'] === $selectedId) {
-                $programme = $item;
-                break;
-            }
-        }
-
-        $compositions = [];
-        if ($selectedId > 0) {
-            $compositions = $compositionModel
-                ->select('programmeAliment.*, aliment.nom, aliment.calories_pour_100g, aliment.proteines_g, aliment.glucides_g, aliment.lipides_g')
-                ->join('aliment', 'aliment.id = programmeAliment.id_aliment', 'left')
-                ->where('programmeAliment.id_programmeRegime', $selectedId)
-                ->orderBy('programmeAliment.type_repas', 'ASC')
-                ->findAll();
-        }
-
-        $grouped = (new AdminDashboardService())->groupMeals($compositions);
-
-        return view('admin/regimes', [
-            'programmes' => $programmes,
-            'programme' => $programme,
-            'meals' => $grouped,
-            'objectifs' => $objectifs,
-            'aliments' => $aliments,
-        ]);
+        
+        return [
+            'labels' => $months,
+            'inscriptions' => $inscriptions,
+            'achats' => $achats
+        ];
     }
-
-    public function sports()
-    {
-        $sportsModel = new SportsModel();
-        $activiteModel = new ActiviteSportiveModel();
-        $objectifModel = new ObjectifModel();
-
-        $niveau = (string) ($this->request->getGet('niveau') ?? '');
-        $niveau = in_array($niveau, ['FAIBLE', 'MOYEN', 'ELEVE'], true) ? $niveau : '';
-
-        $builder = $activiteModel
-            ->select('activiteSportive.*, sports.name as sport_name, sports.category, objectif.name as objectif_label')
-            ->join('sports', 'sports.id = activiteSportive.id_sport', 'left')
-            ->join('objectif', 'objectif.id = activiteSportive.id_objectif', 'left');
-
-        if ($niveau !== '') {
-            $builder->where('activiteSportive.niveau', $niveau);
-        }
-
-        $activites = $builder->orderBy('sports.name', 'ASC')->findAll();
-
-        return view('admin/sports', [
-            'niveau' => $niveau,
-            'activites' => $activites,
-        ]);
-    }
-
+    
+    /**
+     * Gestion des codes prépayés (CRUD complet)
+     */
     public function codes()
     {
-        $codes = (new AdminDashboardService())->getCodes();
-
-        return view('admin/codes', [
-            'codes' => $codes,
-        ]);
+        $codeModel = new CodeModel();
+        $codes = $codeModel->orderBy('id', 'DESC')->findAll();
+        
+        // Ajouter le statut (expiré) pour l'affichage
+        foreach ($codes as &$code) {
+            $code['est_expire'] = $code['date_expiration'] < date('Y-m-d');
+            $code['statut_label'] = $code['utilise'] ? 'Utilisé' : ($code['est_expire'] ? 'Expiré' : 'Actif');
+            $code['statut_class'] = $code['utilise'] ? 'secondary' : ($code['est_expire'] ? 'warning' : 'success');
+        }
+        
+        return view('admin/codes', ['codes' => $codes]);
     }
-
+    
     public function createCode()
     {
-        return $this->saveCode();
-    }
-
-    public function updateCode()
-    {
-        return $this->saveCode(true);
-    }
-
-    private function saveCode(bool $isUpdate = false)
-    {
-        $id = (int) $this->request->getPost('id');
         $code = trim((string) $this->request->getPost('code'));
         $montant = (float) $this->request->getPost('montant');
         $dateExpiration = trim((string) $this->request->getPost('date_expiration'));
-        $utilise = (int) $this->request->getPost('utilise') === 1 ? 1 : 0;
-
+        
         if ($code === '') {
             $code = 'CODE' . strtoupper(substr(bin2hex(random_bytes(4)), 0, 8));
         }
-
+        
         if ($montant <= 0) {
             return redirect()->to('/admin/codes')->with('admin_error', 'Montant invalide.');
         }
-
+        
         if ($dateExpiration === '') {
             $dateExpiration = date('Y-m-d', strtotime('+12 months'));
         }
-
-        try {
-            $payload = [
-                'code' => $code,
-                'montant' => $montant,
-                'date_expiration' => $dateExpiration,
-                'utilise' => $utilise,
-            ];
-
-            $codeModel = new CodeModel();
-            if ($isUpdate) {
-                if ($id <= 0) {
-                    return redirect()->to('/admin/codes')->with('admin_error', 'Code invalide.');
-                }
-                $codeModel->update($id, $payload);
-            } else {
-                $codeModel->insert($payload);
-            }
-
-            return redirect()->to('/admin/codes')->with('admin_success', $isUpdate ? 'Code mis a jour.' : 'Code cree avec succes.');
-        } catch (\Throwable $e) {
-            return redirect()->to('/admin/codes')->with('admin_error', $isUpdate ? 'Impossible de modifier le code.' : 'Impossible de creer le code. Verifie qu il est unique.');
+        
+        $codeModel = new CodeModel();
+        
+        // Vérifier unicité
+        if ($codeModel->where('code', $code)->first()) {
+            return redirect()->to('/admin/codes')->with('admin_error', 'Ce code existe déjà.');
         }
+        
+        $codeModel->insert([
+            'code' => $code,
+            'montant' => $montant,
+            'date_expiration' => $dateExpiration,
+            'utilise' => 0
+        ]);
+        
+        return redirect()->to('/admin/codes')->with('admin_success', 'Code créé : ' . $code);
     }
-
+    
+    public function updateCode()
+    {
+        $id = (int) $this->request->getPost('id');
+        $montant = (float) $this->request->getPost('montant');
+        $dateExpiration = trim((string) $this->request->getPost('date_expiration'));
+        $utilise = (int) $this->request->getPost('utilise') === 1 ? 1 : 0;
+        
+        if ($id <= 0 || $montant <= 0) {
+            return redirect()->to('/admin/codes')->with('admin_error', 'Données invalides.');
+        }
+        
+        $codeModel = new CodeModel();
+        $codeModel->update($id, [
+            'montant' => $montant,
+            'date_expiration' => $dateExpiration,
+            'utilise' => $utilise
+        ]);
+        
+        return redirect()->to('/admin/codes')->with('admin_success', 'Code mis à jour.');
+    }
+    
     public function deleteCode()
     {
         $id = (int) $this->request->getPost('id');
         if ($id <= 0) {
             return redirect()->to('/admin/codes')->with('admin_error', 'Code invalide.');
         }
-
-        try {
-            (new CodeModel())->delete($id);
-            return redirect()->to('/admin/codes')->with('admin_success', 'Code supprime.');
-        } catch (\Throwable $e) {
-            return redirect()->to('/admin/codes')->with('admin_error', 'Suppression impossible.');
+        
+        $codeModel = new CodeModel();
+        $code = $codeModel->find($id);
+        
+        if ($code && $code['utilise']) {
+            return redirect()->to('/admin/codes')->with('admin_error', 'Impossible de supprimer un code déjà utilisé.');
         }
+        
+        $codeModel->delete($id);
+        return redirect()->to('/admin/codes')->with('admin_success', 'Code supprimé.');
     }
-
-    public function createCategorie()
-    {
-        $libele = trim((string) $this->request->getPost('libele'));
-        if ($libele === '') {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Libele obligatoire.');
-        }
-
-        (new CategorieModel())->insert(['libele' => $libele]);
-        return redirect()->to('/admin/regimes')->with('admin_success', 'Categorie ajoutee.');
+    
+public function generateCodes()
+{
+    $nombre = (int) $this->request->getPost('nombre');
+    $montant = (float) $this->request->getPost('montant');
+    $validiteMois = (int) $this->request->getPost('validite_mois');
+    
+    if ($nombre <= 0 || $nombre > 100) {
+        return redirect()->to('/admin/codes')->with('admin_error', 'Nombre invalide (1-100).');
     }
-
-    public function updateCategorie()
-    {
-        $id = (int) $this->request->getPost('id');
-        $libele = trim((string) $this->request->getPost('libele'));
-
-        if ($id <= 0 || $libele === '') {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Categorie invalide.');
-        }
-
-        (new CategorieModel())->update($id, ['libele' => $libele]);
-        return redirect()->to('/admin/regimes')->with('admin_success', 'Categorie mise a jour.');
+    
+    if ($montant <= 0) {
+        return redirect()->to('/admin/codes')->with('admin_error', 'Montant invalide.');
     }
-
-    public function deleteCategorie()
-    {
-        $id = (int) $this->request->getPost('id');
-        if ($id <= 0) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Categorie invalide.');
-        }
-
-        try {
-            (new CategorieModel())->delete($id);
-            return redirect()->to('/admin/regimes')->with('admin_success', 'Categorie supprimee.');
-        } catch (\Throwable $e) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Categorie utilisee par des aliments. Supprime ou reassigne les aliments avant de continuer.');
-        }
+    
+    $codeModel = new \App\Models\CodeModel();
+    $generated = [];
+    
+    for ($i = 0; $i < $nombre; $i++) {
+        $code = 'CODE' . strtoupper(bin2hex(random_bytes(4)));
+        $codeModel->insert([
+            'code' => $code,
+            'montant' => $montant,
+            'date_expiration' => date('Y-m-d', strtotime("+$validiteMois months")),
+            'utilise' => 0
+        ]);
+        $generated[] = $code;
     }
-
-    public function createAliment()
-    {
-        $data = [
-            'nom' => trim((string) $this->request->getPost('nom')),
-            'id_categorie' => (int) $this->request->getPost('id_categorie'),
-            'calories_pour_100g' => (float) $this->request->getPost('calories_pour_100g'),
-            'proteines_g' => (float) $this->request->getPost('proteines_g'),
-            'glucides_g' => (float) $this->request->getPost('glucides_g'),
-            'lipides_g' => (float) $this->request->getPost('lipides_g'),
-        ];
-
-        if ($data['nom'] === '' || $data['id_categorie'] <= 0) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Aliment invalide.');
-        }
-
-        (new AlimentModel())->insert($data);
-        return redirect()->to('/admin/regimes')->with('admin_success', 'Aliment ajoute.');
-    }
-
-    public function updateAliment()
-    {
-        $id = (int) $this->request->getPost('id');
-        $data = [
-            'nom' => trim((string) $this->request->getPost('nom')),
-            'id_categorie' => (int) $this->request->getPost('id_categorie'),
-            'calories_pour_100g' => (float) $this->request->getPost('calories_pour_100g'),
-            'proteines_g' => (float) $this->request->getPost('proteines_g'),
-            'glucides_g' => (float) $this->request->getPost('glucides_g'),
-            'lipides_g' => (float) $this->request->getPost('lipides_g'),
-        ];
-
-        if ($id <= 0 || $data['nom'] === '' || $data['id_categorie'] <= 0) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Aliment invalide.');
-        }
-
-        (new AlimentModel())->update($id, $data);
-        return redirect()->to('/admin/regimes')->with('admin_success', 'Aliment mis a jour.');
-    }
-
-    public function deleteAliment()
-    {
-        $id = (int) $this->request->getPost('id');
-        if ($id <= 0) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Aliment invalide.');
-        }
-
-        try {
-            (new AlimentModel())->delete($id);
-            return redirect()->to('/admin/regimes')->with('admin_success', 'Aliment supprime.');
-        } catch (\Throwable $e) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Aliment utilise dans un programme. Supprime les compositions avant de continuer.');
-        }
-    }
-
-    public function createProgramme()
-    {
-        $data = [
-            'nom' => trim((string) $this->request->getPost('nom')),
-            'id_objectif' => (int) $this->request->getPost('id_objectif'),
-            'variation_poids' => (float) $this->request->getPost('variation_poids'),
-            'imc_min' => (float) $this->request->getPost('imc_min'),
-            'imc_max' => (float) $this->request->getPost('imc_max'),
-            'duree_jours' => (int) $this->request->getPost('duree_jours'),
-            'prix' => (float) $this->request->getPost('prix'),
-        ];
-
-        if ($data['nom'] === '' || $data['id_objectif'] <= 0 || $data['duree_jours'] <= 0) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Programme invalide.');
-        }
-
-        (new ProgrammeRegimeModel())->insert($data);
-        return redirect()->to('/admin/regimes')->with('admin_success', 'Programme ajoute.');
-    }
-
-    public function updateProgramme()
-    {
-        $id = (int) $this->request->getPost('id');
-        $data = [
-            'nom' => trim((string) $this->request->getPost('nom')),
-            'id_objectif' => (int) $this->request->getPost('id_objectif'),
-            'variation_poids' => (float) $this->request->getPost('variation_poids'),
-            'imc_min' => (float) $this->request->getPost('imc_min'),
-            'imc_max' => (float) $this->request->getPost('imc_max'),
-            'duree_jours' => (int) $this->request->getPost('duree_jours'),
-            'prix' => (float) $this->request->getPost('prix'),
-        ];
-
-        if ($id <= 0 || $data['nom'] === '' || $data['id_objectif'] <= 0 || $data['duree_jours'] <= 0) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Programme invalide.');
-        }
-
-        (new ProgrammeRegimeModel())->update($id, $data);
-        return redirect()->to('/admin/regimes')->with('admin_success', 'Programme mis a jour.');
-    }
-
-    public function deleteProgramme()
-    {
-        $id = (int) $this->request->getPost('id');
-        if ($id <= 0) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Programme invalide.');
-        }
-
-        try {
-            (new ProgrammeRegimeModel())->delete($id);
-            return redirect()->to('/admin/regimes')->with('admin_success', 'Programme supprime.');
-        } catch (\Throwable $e) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Programme lie a des achats ou compositions. Supprime les dependances avant de continuer.');
-        }
-    }
-
-    public function createComposition()
-    {
-        $data = [
-            'id_programmeRegime' => (int) $this->request->getPost('id_programmeRegime'),
-            'id_aliment' => (int) $this->request->getPost('id_aliment'),
-            'quantite_g' => (float) $this->request->getPost('quantite_g'),
-            'type_repas' => trim((string) $this->request->getPost('type_repas')),
-        ];
-
-        if ($data['id_programmeRegime'] <= 0 || $data['id_aliment'] <= 0 || $data['quantite_g'] <= 0 || $data['type_repas'] === '') {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Composition invalide.');
-        }
-
-        (new ProgrammeAlimentModel())->insert($data);
-        return redirect()->to('/admin/regimes')->with('admin_success', 'Composition ajoutee.');
-    }
-
-    public function updateComposition()
-    {
-        $id = (int) $this->request->getPost('id');
-        $data = [
-            'id_programmeRegime' => (int) $this->request->getPost('id_programmeRegime'),
-            'id_aliment' => (int) $this->request->getPost('id_aliment'),
-            'quantite_g' => (float) $this->request->getPost('quantite_g'),
-            'type_repas' => trim((string) $this->request->getPost('type_repas')),
-        ];
-
-        if ($id <= 0 || $data['id_programmeRegime'] <= 0 || $data['id_aliment'] <= 0 || $data['quantite_g'] <= 0 || $data['type_repas'] === '') {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Composition invalide.');
-        }
-
-        (new ProgrammeAlimentModel())->update($id, $data);
-        return redirect()->to('/admin/regimes')->with('admin_success', 'Composition mise a jour.');
-    }
-
-    public function deleteComposition()
-    {
-        $id = (int) $this->request->getPost('id');
-        if ($id <= 0) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Composition invalide.');
-        }
-
-        try {
-            (new ProgrammeAlimentModel())->delete($id);
-            return redirect()->to('/admin/regimes')->with('admin_success', 'Composition supprimee.');
-        } catch (\Throwable $e) {
-            return redirect()->to('/admin/regimes')->with('admin_error', 'Suppression impossible pour le moment.');
-        }
-    }
-
+    
+    return redirect()->to('/admin/codes')->with('admin_success', $nombre . ' codes générés : ' . implode(', ', $generated));
 }
+}
+

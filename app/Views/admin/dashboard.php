@@ -101,6 +101,83 @@
         </div>
       </section>
 
+<!-- Statistiques rapides -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5>Utilisateurs</h5>
+                <h2><?= array_sum(array_column($usersByRole, 'count')) ?></h2>
+                <small>dont <?= $nbGold ?> Gold</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5>Revenus totaux</h5>
+                <h2><?= number_format($revenusTotaux, 0) ?> Ar</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5>Membres Gold</h5>
+                <h2><?= $nbGold ?></h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5>Ventes totales</h5>
+                <h2><?= array_sum($achats) ?> régimes</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Graphiques (avec Chart.js) -->
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header">Évolution mensuelle</div>
+            <div class="card-body">
+                <canvas id="evolutionChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-header">Top régimes vendus</div>
+            <div class="card-body p-0">
+                <table class="table table-sm mb-0">
+                    <?php foreach ($ventesParRegime as $vente): ?>
+                    <tr>
+                        <td><?= $vente['nom'] ?></td>
+                        <td class="text-end"><?= $vente['nb_ventes'] ?> vendus</td>
+                    </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById('evolutionChart'), {
+    type: 'line',
+    data: {
+        labels: <?= json_encode($monthLabels) ?>,
+        datasets: [
+            { label: 'Inscriptions', data: <?= json_encode($inscriptionsData) ?>, borderColor: 'blue', fill: false },
+            { label: 'Achats', data: <?= json_encode($achatsData) ?>, borderColor: 'green', fill: false }
+        ]
+    }
+});
+</script>
       <section class="admin-panels">
         <div class="admin-panel-card">
           <div class="panel-header">

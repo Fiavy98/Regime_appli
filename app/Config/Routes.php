@@ -50,3 +50,11 @@ $routes->post('/admin/programmes/delete', 'AdminController::deleteProgramme', ['
 $routes->post('/admin/compositions/create', 'AdminController::createComposition', ['filter' => 'role:admin']);
 $routes->post('/admin/compositions/update', 'AdminController::updateComposition', ['filter' => 'role:admin']);
 $routes->post('/admin/compositions/delete', 'AdminController::deleteComposition', ['filter' => 'role:admin']);
+// Wallet & Gold (à la fin du fichier)
+$routes->get('/wallet', 'WalletController::index', ['filter' => 'role:user']);
+$routes->post('/wallet/appliquer_code', 'WalletController::applyCode', ['filter' => 'role:user']);
+$routes->post('/wallet/devenir_gold', 'WalletController::becomeGold', ['filter' => 'role:user']);
+$routes->get('/gold', 'WalletController::goldInfo', ['filter' => 'role:user']);
+
+// Génération de codes en masse
+$routes->post('/admin/codes/generate', 'AdminController::generateCodes', ['filter' => 'role:admin']);
