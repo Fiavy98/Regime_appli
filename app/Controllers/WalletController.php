@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\UserPortefeuilleModel;
+use App\Models\UserPortefeuileModel;
 use App\Models\MvntPrortefeuileModel;
 use App\Models\CodeModel;
 use App\Models\UserGoldModel;
@@ -18,7 +18,7 @@ class WalletController extends BaseController
             return redirect()->to('/login');
         }
         
-        $portefeuilleModel = new UserPortefeuilleModel();
+        $portefeuilleModel = new UserPortefeuileModel();
         $mvntModel = new MvntPrortefeuileModel();
         $goldModel = new UserGoldModel();
         
@@ -78,7 +78,7 @@ class WalletController extends BaseController
         $codeModel->update($codeRow['id'], ['utilise' => 1]);
         
         // Créditer le portefeuille
-        $portefeuilleModel = new UserPortefeuilleModel();
+        $portefeuilleModel = new UserPortefeuileModel();
         $montant = (float) $codeRow['montant'];
         $portefeuilleModel->crediter($userId, $montant);
         
@@ -121,7 +121,7 @@ class WalletController extends BaseController
             return redirect()->to('/wallet')->with('wallet_error', 'Vous êtes déjà membre Gold.');
         }
         
-        $portefeuilleModel = new UserPortefeuilleModel();
+        $portefeuilleModel = new UserPortefeuileModel();
         $solde = $portefeuilleModel->getSolde($userId);
         
         if ($solde < self::GOLD_PRICE) {
