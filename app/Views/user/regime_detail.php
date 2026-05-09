@@ -98,7 +98,20 @@ $isPurchased = (bool) ($isPurchased ?? false);
             <?php foreach ($selectedMeals as $type => $items): ?>
               <div class="meal-card">
                 <div class="meal-card-head">
-                  <h4><?= esc(ucwords(str_replace('_', ' ', strtolower($type)))) ?></h4>
+                  <?php
+                    $mealTypeLabel = esc(ucwords(str_replace('_', ' ', strtolower($type))));
+                    $mealEmoji = '🥗';
+                    if ($type === 'PETIT_DEJEUNER') {
+                      $mealEmoji = '🥐';
+                    } elseif ($type === 'DEJEUNER') {
+                      $mealEmoji = '🍽️';
+                    } elseif ($type === 'DINER') {
+                      $mealEmoji = '🌙';
+                    } elseif ($type === 'COLLATION') {
+                      $mealEmoji = '🍎';
+                    }
+                  ?>
+                  <h4><?= $mealEmoji ?> <?= $mealTypeLabel ?></h4>
                   <span class="meal-badge"><?= esc(count($items)) ?> aliments</span>
                 </div>
 
