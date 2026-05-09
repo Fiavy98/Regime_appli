@@ -10,6 +10,13 @@ INSERT INTO objectif (id, name) VALUES
 (2, 'Reduire poids'),
 (3, 'IMC ideal');
 
+INSERT INTO userBody (id_user, taille, poids, id_objectif, date) VALUES
+(1, 1.75, 70.00, 3, '2026-05-01'),
+(2, 1.60, 55.00, 3, '2026-05-01'),
+(3, 1.80, 85.00, 1, '2026-05-01'),
+(4, 1.78, 90.00, 2, '2026-05-01'),
+(5, 1.55, 48.00, 3, '2026-05-01');
+
 INSERT INTO statusRegime (id, libel) VALUES
 (1, 'en cours'),
 (2, 'termine'),
