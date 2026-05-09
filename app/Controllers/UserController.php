@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\AchatRegimeDetailModel;
 use App\Models\AchatRegimeModel;
 use App\Models\ProgrammeRegimeModel;
 use App\Models\UserGoldModel;

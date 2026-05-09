@@ -3568,3 +3568,12 @@ in SYSTEMPATH/Database/BaseConnection.php on line 606.
  9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
 10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
 11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-09 18:01:15 --> Error: Class "App\Controllers\AchatRegimeDetailModel" not found
+[Method: POST, Route: dashboard/regimes/purchase]
+in APPPATH/Controllers/UserController.php on line 156.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\UserController->purchaseRegime()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()

@@ -1603,6 +1603,9 @@ a { color: inherit; text-decoration: none; }
 .meal-item strong {
   display: block;
   margin-bottom: 2px;
+  color: var(--green-700);
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .meal-item small {
