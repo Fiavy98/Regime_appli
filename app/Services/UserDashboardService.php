@@ -143,12 +143,27 @@ class UserDashboardService
             ->first();
         $objectifId = (int) ($body['id_objectif'] ?? 0);
 
+        $imcRecord = (new ImcHistoryModel())
+            ->where('id_user', $userId)
+            ->orderBy('date', 'DESC')
+            ->first();
+        $imcUser = $imcRecord ? (float) $imcRecord['imc'] : null;
+        if ($imcUser === null && !empty($body['taille']) && !empty($body['poids'])) {
+            $taille = (float) $body['taille'];
+            $imcUser = $taille > 0 ? (float) $body['poids'] / ($taille * $taille) : null;
+        }
+
         $programmeQuery = $programmeModel
             ->select('programmeRegime.*, objectif.name as objectif_label')
             ->join('objectif', 'objectif.id = programmeRegime.id_objectif', 'left')
             ->orderBy('programmeRegime.nom', 'ASC');
         if ($objectifId > 0) {
             $programmeQuery->where('programmeRegime.id_objectif', $objectifId);
+        }
+        if ($imcUser !== null) {
+            $programmeQuery
+                ->where('programmeRegime.imc_min <=', $imcUser)
+                ->where('programmeRegime.imc_max >=', $imcUser);
         }
         $programmes = $programmeQuery->findAll();
 

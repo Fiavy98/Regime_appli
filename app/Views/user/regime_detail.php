@@ -62,18 +62,18 @@ $basePrice = (float) ($selectedProgramme['prix'] ?? 0);
 
       <section class="user-cards">
         <div class="card">
-          <span>Prix de base</span>
+          <span>Prix normal</span>
           <strong><?= number_format($basePrice, 0, ',', ' ') ?> Ar</strong>
-          <small>Avant reduction</small>
+          <small>Prix public du programme</small>
         </div>
         <div class="card">
-          <span>Reduction Gold</span>
-          <strong><?= number_format((float) ($discount ?? 0), 0, ',', ' ') ?> Ar</strong>
-          <small><?= $hasGold ? 'Compte Gold actif' : 'Aucune reduction' ?></small>
+          <span>Prix Gold</span>
+          <strong><?= $hasGold ? number_format($finalPrice, 0, ',', ' ') . ' Ar' : '—' ?></strong>
+          <small><?= $hasGold ? 'Réduction -15% appliquée' : 'Disponible après Gold' ?></small>
         </div>
         <div class="card">
           <span>Prix final</span>
-          <strong><?= number_format((float) ($finalPrice ?? 0), 0, ',', ' ') ?> Ar</strong>
+          <strong><?= number_format((float) ($finalPrice ?? $basePrice), 0, ',', ' ') ?> Ar</strong>
           <small>A payer pour acheter</small>
         </div>
         <div class="card">

@@ -11,6 +11,7 @@ use App\Models\ImcHistoryModel;
 use App\Models\UserBodyModel;
 use App\Models\UserModel;
 use App\Models\UserPortefeuileModel;
+use App\Models\MvntPrortefeuileModel;
 use App\Services\UserDashboardService;
 
 class UserController extends BaseController
@@ -158,11 +159,14 @@ class UserController extends BaseController
             'prix_unitaire' => $finalPrice,
         ]);
 
+        $dateDebut = date('Y-m-d');
+        $dateFin = date('Y-m-d', strtotime('+' . (int) $programme['duree_jours'] . ' days'));
+
         (new UserProgrammeModel())->insert([
             'id_user' => $userId,
             'id_programmeRegime' => $programmeId,
-            'date_debut' => date('Y-m-d'),
-            'date_fin' => null,
+            'date_debut' => $dateDebut,
+            'date_fin' => $dateFin,
             'prix_paye' => $finalPrice,
             'id_statusRegime' => 1,
         ]);
@@ -172,6 +176,9 @@ class UserController extends BaseController
                 'montant' => $balance - $finalPrice,
             ]);
         }
+
+        $mvntModel = new MvntPrortefeuileModel();
+        $mvntModel->addTransaction($userId, 'debit', $finalPrice);
 
         $db->transComplete();
 
