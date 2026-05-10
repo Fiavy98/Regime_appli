@@ -241,9 +241,9 @@ new Chart(document.getElementById('evolutionChart'), {
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const labels = <?= $monthLabels ?? '[]' ?>;
-    const inscriptions = <?= $inscriptions ?? '[]' ?>;
-    const ventes = <?= $ventes ?? '[]' ?>;
+    const labels = <?= json_encode($monthLabels ?? []) ?>;
+    const inscriptions = <?= isset($inscriptionsData) ? json_encode($inscriptionsData) : ($inscriptions ?? '[]') ?>;
+    const ventes = <?= isset($achatsData) ? json_encode($achatsData) : ($ventes ?? '[]') ?>;
     const objectifLabels = <?= $ventesObjectifLabels ?? '[]' ?>;
     const objectifValues = <?= $ventesObjectifValues ?? '[]' ?>;
     const chartEl = document.getElementById('inscriptionsChart');

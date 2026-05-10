@@ -10,6 +10,9 @@ use App\Models\ProgrammeAlimentModel;
 use App\Models\ProgrammeRegimeModel;
 use App\Models\SportsModel;
 use App\Models\ActiviteSportiveModel;
+use App\Models\UserModel;
+use App\Models\AchatRegimeModel;
+use App\Models\UserGoldModel;
 use App\Services\AdminDashboardService;
 
 class AdminController extends BaseController
@@ -68,10 +71,10 @@ class AdminController extends BaseController
             $month = date('Y-m', strtotime("-$i months"));
             $months[] = date('M Y', strtotime("-$i months"));
             
-            // Inscriptions du mois
-            $inscriptionsCount = $db->table('user')
-                ->where('MONTH(created_at)', date('m', strtotime($month)))
-                ->where('YEAR(created_at)', date('Y', strtotime($month)))
+            // Inscriptions du mois — on utilise la table userBody car la table user ne contient pas de colonne de date
+            $inscriptionsCount = $db->table('userBody')
+                ->where('MONTH(date)', date('m', strtotime($month)))
+                ->where('YEAR(date)', date('Y', strtotime($month)))
                 ->countAllResults();
             $inscriptions[] = $inscriptionsCount;
             
