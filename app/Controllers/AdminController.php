@@ -410,5 +410,123 @@ public function generateCodes()
     
     return redirect()->to('/admin/codes')->with('admin_success', $nombre . ' codes générés : ' . implode(', ', $generated));
 }
+
+    /**
+     * Gestion des utilisateurs (CRUD complet)
+     */
+    public function users()
+    {
+        $userModel = new UserModel();
+        $userGoldModel = new UserGoldModel();
+
+        $users = $userModel->orderBy('id', 'DESC')->findAll();
+
+        // Ajouter le statut Gold pour chaque utilisateur
+        foreach ($users as &$user) {
+            $user['is_gold'] = $userGoldModel->hasGold($user['id']);
+            $user['gold_info'] = $user['is_gold'] ? $userGoldModel->getGoldInfo($user['id']) : null;
+        }
+
+        return view('admin/users', ['users' => $users]);
+    }
+
+    public function updateUser()
+    {
+        $id = (int) $this->request->getPost('id');
+        $role = trim((string) $this->request->getPost('role'));
+
+        if ($id <= 0 || !in_array($role, ['user', 'admin'])) {
+            return redirect()->to('/admin/users')->with('admin_error', 'Données invalides.');
+        }
+
+        $userModel = new UserModel();
+        $userModel->update($id, ['role' => $role]);
+
+        return redirect()->to('/admin/users')->with('admin_success', 'Utilisateur mis à jour.');
+    }
+
+    public function deleteUser()
+    {
+        $id = (int) $this->request->getPost('id');
+        if ($id <= 0) {
+            return redirect()->to('/admin/users')->with('admin_error', 'Utilisateur invalide.');
+        }
+
+        $userModel = new UserModel();
+        $user = $userModel->find($id);
+
+        if (!$user) {
+            return redirect()->to('/admin/users')->with('admin_error', 'Utilisateur introuvable.');
+        }
+
+        // Empêcher la suppression d'admin
+        if ($user['role'] === 'admin') {
+            return redirect()->to('/admin/users')->with('admin_error', 'Impossible de supprimer un administrateur.');
+        }
+
+        $userModel->delete($id);
+        return redirect()->to('/admin/users')->with('admin_success', 'Utilisateur supprimé.');
+    }
+
+    /**
+     * Gestion des abonnements Gold (CRUD complet)
+     */
+    public function gold()
+    {
+        $userGoldModel = new UserGoldModel();
+        $userModel = new UserModel();
+
+        // Récupérer tous les utilisateurs Gold avec leurs infos
+        $goldUsers = $userGoldModel
+            ->select('userGold.*, user.name, user.email, user.role')
+            ->join('user', 'user.id = userGold.id_user')
+            ->orderBy('userGold.date_achat', 'DESC')
+            ->findAll();
+
+        // Récupérer aussi les utilisateurs non-Gold pour pouvoir les ajouter
+        $nonGoldUsers = $userModel
+            ->select('user.id, user.name, user.email, user.role')
+            ->whereNotIn('user.id', array_column($goldUsers, 'id_user'))
+            ->orderBy('user.name', 'ASC')
+            ->findAll();
+
+        return view('admin/gold', [
+            'goldUsers' => $goldUsers,
+            'nonGoldUsers' => $nonGoldUsers
+        ]);
+    }
+
+    public function subscribeGold()
+    {
+        $userId = (int) $this->request->getPost('id_user');
+
+        if ($userId <= 0) {
+            return redirect()->to('/admin/gold')->with('admin_error', 'Utilisateur invalide.');
+        }
+
+        $userGoldModel = new UserGoldModel();
+
+        if ($userGoldModel->hasGold($userId)) {
+            return redirect()->to('/admin/gold')->with('admin_error', 'Cet utilisateur est déjà abonné Gold.');
+        }
+
+        $userGoldModel->subscribe($userId, 0); // Prix 0 pour admin
+
+        return redirect()->to('/admin/gold')->with('admin_success', 'Utilisateur abonné Gold avec succès.');
+    }
+
+    public function unsubscribeGold()
+    {
+        $userId = (int) $this->request->getPost('id_user');
+
+        if ($userId <= 0) {
+            return redirect()->to('/admin/gold')->with('admin_error', 'Utilisateur invalide.');
+        }
+
+        $userGoldModel = new UserGoldModel();
+        $userGoldModel->where('id_user', $userId)->delete();
+
+        return redirect()->to('/admin/gold')->with('admin_success', 'Abonnement Gold retiré.');
+    }
 }
 

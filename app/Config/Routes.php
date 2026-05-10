@@ -59,3 +59,13 @@ $routes->get('/gold', 'WalletController::goldInfo', ['filter' => 'role:user']);
 
 // Génération de codes en masse
 $routes->post('/admin/codes/generate', 'AdminController::generateCodes', ['filter' => 'role:admin']);
+
+// Gestion des utilisateurs
+$routes->get('/admin/users', 'AdminController::users', ['filter' => 'role:admin']);
+$routes->post('/admin/users/update', 'AdminController::updateUser', ['filter' => 'role:admin']);
+$routes->post('/admin/users/delete', 'AdminController::deleteUser', ['filter' => 'role:admin']);
+
+// Gestion des abonnements Gold
+$routes->get('/admin/gold', 'AdminController::gold', ['filter' => 'role:admin']);
+$routes->post('/admin/gold/subscribe', 'AdminController::subscribeGold', ['filter' => 'role:admin']);
+$routes->post('/admin/gold/unsubscribe', 'AdminController::unsubscribeGold', ['filter' => 'role:admin']);

@@ -17,8 +17,8 @@ $active = $active ?? 'dashboard';
   </div>
   <div class="sidebar-section">
     <span class="sidebar-title">Utilisateurs</span>
-    <a class="sidebar-link" href="#">👥 Utilisateurs</a>
-    <a class="sidebar-link" href="#">👑 Abonnés Gold</a>
+    <a class="sidebar-link <?= $active === 'users' ? 'active' : '' ?>" href="<?= base_url('/admin/users') ?>">👥 Utilisateurs</a>
+    <a class="sidebar-link <?= $active === 'gold' ? 'active' : '' ?>" href="<?= base_url('/admin/gold') ?>">👑 Abonnés Gold</a>
   </div>
   <div class="sidebar-section">
     <span class="sidebar-title">Paramètres</span>
