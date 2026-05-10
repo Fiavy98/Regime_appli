@@ -574,3 +574,503 @@ in APPPATH/Views/admin/dashboard.php on line 244.
  9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
 10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
 11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-05-10 06:36:31 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php(201): mysqli->real_connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/AdminController.php(26): CodeIgniter\BaseModel->findAll()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\AdminController->dashboard()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:231
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/AdminController.php(26): CodeIgniter\BaseModel->findAll()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\AdminController->dashboard()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#12 {main}
+CRITICAL - 2026-05-10 06:36:31 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No such file or directory
+[Method: GET, Route: admin]
+in SYSTEMPATH/Database/BaseConnection.php on line 606.
+ 1 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+ 3 SYSTEMPATH/Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 5 APPPATH/Controllers/AdminController.php(26): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->dashboard()
+ 7 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-05-10 06:36:32 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php(201): mysqli->real_connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/AdminController.php(26): CodeIgniter\BaseModel->findAll()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\AdminController->dashboard()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:231
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/AdminController.php(26): CodeIgniter\BaseModel->findAll()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\AdminController->dashboard()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#12 {main}
+CRITICAL - 2026-05-10 06:36:32 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No such file or directory
+[Method: GET, Route: admin]
+in SYSTEMPATH/Database/BaseConnection.php on line 606.
+ 1 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+ 3 SYSTEMPATH/Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 5 APPPATH/Controllers/AdminController.php(26): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->dashboard()
+ 7 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-05-10 06:36:32 --> Error connecting to the database: mysqli_sql_exception: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:201
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php(201): mysqli->real_connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/AdminController.php(26): CodeIgniter\BaseModel->findAll()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\AdminController->dashboard()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#12 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No such file or directory in /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/MySQLi/Connection.php:231
+Stack trace:
+#0 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect()
+#1 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+#3 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+#4 /home/kamado/ITU/S4/Syst.Info/REGIME/system/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+#5 /home/kamado/ITU/S4/Syst.Info/REGIME/app/Controllers/AdminController.php(26): CodeIgniter\BaseModel->findAll()
+#6 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(951): App\Controllers\AdminController->dashboard()
+#7 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+#8 /home/kamado/ITU/S4/Syst.Info/REGIME/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+#9 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(417): CodeIgniter\CodeIgniter->run()
+#10 /home/kamado/ITU/S4/Syst.Info/REGIME/system/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+#11 /home/kamado/ITU/S4/Syst.Info/REGIME/public/index.php(59): CodeIgniter\Boot::bootWeb()
+#12 {main}
+CRITICAL - 2026-05-10 06:36:32 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No such file or directory
+[Method: GET, Route: admin]
+in SYSTEMPATH/Database/BaseConnection.php on line 606.
+ 1 SYSTEMPATH/Database/BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query()
+ 3 SYSTEMPATH/Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH/BaseModel.php(676): CodeIgniter\Model->doFindAll()
+ 5 APPPATH/Controllers/AdminController.php(26): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->dashboard()
+ 7 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:37:42 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(111): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:38:06 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(111): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:39:13 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(111): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:46:49 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:46:52 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:47:05 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:47:09 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:47:37 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:47:50 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:48:09 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:48:24 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:48:45 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:48:48 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:48:52 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:48:55 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:48:58 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:49:01 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:49:05 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:49:21 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:49:24 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:50:09 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:50:15 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:50:25 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:50:31 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:50:39 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:50:49 --> Error: Call to undefined method App\Controllers\AdminController::groupMeals()
+[Method: GET, Route: admin/regimes]
+in APPPATH/Controllers/AdminController.php on line 102.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->regimes()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:50:52 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:50:54 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+CRITICAL - 2026-05-10 06:50:57 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "partials/admin_navbar.php"
+[Method: GET, Route: admin/codes]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Views/admin/codes.php(10): view()
+ 4 SYSTEMPATH/View/View.php(240): include('/home/kamado/ITU/S4/Syst.Info/REGIME/app/Views/admin/codes.php')
+ 5 SYSTEMPATH/View/View.php(243): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 7 APPPATH/Controllers/AdminController.php(278): view()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AdminController->codes()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+13 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()

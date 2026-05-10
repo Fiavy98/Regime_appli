@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <?= view('partials/admin_navbar') ?>
+    <?= view('admin/_sidebar', ['active' => 'codes']) ?>
     
     <div class="container-fluid mt-4">
         <div class="row">

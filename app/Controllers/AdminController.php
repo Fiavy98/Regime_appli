@@ -59,7 +59,202 @@ class AdminController extends BaseController
             'achatsData' => $monthlyData['achats']
         ]));
     }
-    
+
+    public function regimes()
+    {
+        $selectedId = (int) $this->request->getGet('id');
+        $programmeModel = new ProgrammeRegimeModel();
+        $objectifModel = new ObjectifModel();
+        $alimentModel = new AlimentModel();
+        $compositionModel = new ProgrammeAlimentModel();
+
+        $programmes = $programmeModel
+            ->select('programmeRegime.*, objectif.name as objectif_label')
+            ->join('objectif', 'objectif.id = programmeRegime.id_objectif', 'left')
+            ->orderBy('programmeRegime.nom', 'ASC')
+            ->findAll();
+
+        if ($selectedId <= 0 && !empty($programmes)) {
+            $selectedId = (int) $programmes[0]['id'];
+        }
+
+        $programme = null;
+        foreach ($programmes as $item) {
+            if ((int) $item['id'] === $selectedId) {
+                $programme = $item;
+                break;
+            }
+        }
+
+        $compositions = [];
+        if ($selectedId > 0) {
+            $compositions = $compositionModel
+                ->select('programmeAliment.*, aliment.nom, aliment.calories_pour_100g, aliment.proteines_g, aliment.glucides_g, aliment.lipides_g')
+                ->join('aliment', 'aliment.id = programmeAliment.id_aliment', 'left')
+                ->where('programmeAliment.id_programmeRegime', $selectedId)
+                ->orderBy('programmeAliment.type_repas', 'ASC')
+                ->findAll();
+        }
+
+        return view('admin/regimes', [
+            'programmes' => $programmes,
+            'programme' => $programme,
+            'meals' => $this->groupMeals($compositions),
+            'objectifs' => $objectifModel->orderBy('name', 'ASC')->findAll(),
+            'aliments' => $alimentModel->orderBy('nom', 'ASC')->findAll(),
+        ]);
+    }
+
+    public function createProgramme()
+    {
+        $nom = trim((string) $this->request->getPost('nom'));
+        $idObjectif = (int) $this->request->getPost('id_objectif');
+        $variationPoids = (float) $this->request->getPost('variation_poids');
+        $imcMin = (float) $this->request->getPost('imc_min');
+        $imcMax = (float) $this->request->getPost('imc_max');
+        $dureeJours = (int) $this->request->getPost('duree_jours');
+        $prix = (float) $this->request->getPost('prix');
+
+        if ($nom === '' || $idObjectif <= 0 || $dureeJours <= 0 || $prix <= 0) {
+            return redirect()->to('/admin/regimes')->with('admin_error', 'Données de programme invalides.');
+        }
+
+        $programmeModel = new ProgrammeRegimeModel();
+        $programmeModel->insert([
+            'nom' => $nom,
+            'id_objectif' => $idObjectif,
+            'variation_poids' => $variationPoids,
+            'imc_min' => $imcMin,
+            'imc_max' => $imcMax,
+            'duree_jours' => $dureeJours,
+            'prix' => $prix,
+        ]);
+
+        $insertId = $programmeModel->getInsertID();
+        return redirect()->to('/admin/regimes?id=' . ($insertId > 0 ? $insertId : ''))->with('admin_success', 'Programme créé avec succès.');
+    }
+
+    public function createComposition()
+    {
+        $programmeId = (int) $this->request->getPost('id_programmeRegime');
+        $alimentId = (int) $this->request->getPost('id_aliment');
+        $quantite = (float) $this->request->getPost('quantite_g');
+        $typeRepas = trim((string) $this->request->getPost('type_repas'));
+
+        if ($programmeId <= 0 || $alimentId <= 0 || $quantite <= 0 || $typeRepas === '') {
+            return redirect()->to('/admin/regimes?id=' . $programmeId)->with('admin_error', 'Données de composition invalides.');
+        }
+
+        $compositionModel = new ProgrammeAlimentModel();
+        $compositionModel->insert([
+            'id_programmeRegime' => $programmeId,
+            'id_aliment' => $alimentId,
+            'quantite_g' => $quantite,
+            'type_repas' => $typeRepas,
+        ]);
+
+        return redirect()->to('/admin/regimes?id=' . $programmeId)->with('admin_success', 'Composition ajoutée avec succès.');
+    }
+
+    private function groupMeals(array $rows): array
+    {
+        $groups = [
+            'PETIT_DEJEUNER' => [],
+            'DEJEUNER' => [],
+            'DINER' => [],
+            'COLLATION' => [],
+        ];
+
+        foreach ($rows as $row) {
+            $type = $row['type_repas'] ?? 'COLLATION';
+            if (!isset($groups[$type])) {
+                $groups[$type] = [];
+            }
+
+            $quantity = (float) ($row['quantite_g'] ?? 0);
+            $factor = $quantity > 0 ? $quantity / 100 : 0;
+            $row['calories'] = round(((float) ($row['calories_pour_100g'] ?? 0)) * $factor);
+            $row['proteines'] = round(((float) ($row['proteines_g'] ?? 0)) * $factor, 1);
+            $row['glucides'] = round(((float) ($row['glucides_g'] ?? 0)) * $factor, 1);
+            $row['lipides'] = round(((float) ($row['lipides_g'] ?? 0)) * $factor, 1);
+
+            $groups[$type][] = $row;
+        }
+
+        return $groups;
+    }
+
+    public function sports()
+    {
+        $niveau = trim((string) $this->request->getGet('niveau'));
+        $activiteModel = new ActiviteSportiveModel();
+
+        $query = $activiteModel
+            ->select('activiteSportive.*, sports.name as sport_name, sports.category as category, objectif.name as objectif_label')
+            ->join('sports', 'sports.id = activiteSportive.id_sport', 'left')
+            ->join('objectif', 'objectif.id = activiteSportive.id_objectif', 'left')
+            ->orderBy('activiteSportive.niveau', 'ASC');
+
+        if ($niveau !== '') {
+            $query->where('activiteSportive.niveau', $niveau);
+        }
+
+        return view('admin/sports', [
+            'activites' => $query->findAll(),
+            'niveau' => $niveau,
+        ]);
+    }
+
+    public function createCategorie()
+    {
+        return redirect()->to('/admin')->with('admin_error', 'Gestion des catégories non disponible pour le moment.');
+    }
+
+    public function updateCategorie()
+    {
+        return redirect()->to('/admin')->with('admin_error', 'Gestion des catégories non disponible pour le moment.');
+    }
+
+    public function deleteCategorie()
+    {
+        return redirect()->to('/admin')->with('admin_error', 'Gestion des catégories non disponible pour le moment.');
+    }
+
+    public function createAliment()
+    {
+        return redirect()->to('/admin')->with('admin_error', 'Gestion des aliments non disponible pour le moment.');
+    }
+
+    public function updateAliment()
+    {
+        return redirect()->to('/admin')->with('admin_error', 'Gestion des aliments non disponible pour le moment.');
+    }
+
+    public function deleteAliment()
+    {
+        return redirect()->to('/admin')->with('admin_error', 'Gestion des aliments non disponible pour le moment.');
+    }
+
+    public function updateProgramme()
+    {
+        return redirect()->to('/admin/regimes')->with('admin_error', 'Mise à jour de programme non disponible pour le moment.');
+    }
+
+    public function deleteProgramme()
+    {
+        return redirect()->to('/admin/regimes')->with('admin_error', 'Suppression de programme non disponible pour le moment.');
+    }
+
+    public function updateComposition()
+    {
+        return redirect()->to('/admin/regimes')->with('admin_error', 'Mise à jour de composition non disponible pour le moment.');
+    }
+
+    public function deleteComposition()
+    {
+        return redirect()->to('/admin/regimes')->with('admin_error', 'Suppression de composition non disponible pour le moment.');
+    }
+
     private function getMonthlyStats(): array
     {
         $db = \Config\Database::connect();
