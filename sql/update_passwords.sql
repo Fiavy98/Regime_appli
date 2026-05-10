@@ -7,4 +7,6 @@
 -- WHERE email IN ('aina@gmail.com', 'fara@gmail.com', 'andry@gmail.com', 'hery@gmail.com', 'lala@gmail.com');
 
 
-aina@gmail.com ,fara@gmail.com,andry@gmail.com ,hery@gmail.com = pass123
+aina@gmail.com ,fara@gmail.com,hery@gmail.com = pass123
+
+admin@gmail.com = pass123
