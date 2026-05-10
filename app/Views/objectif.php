@@ -36,7 +36,7 @@ $objectifCards = [
         <div class="pill">🎯 F5 - Choix d'objectif</div>
         <h1 class="public-title">Choisis ton objectif</h1>
         <p class="public-subtitle">
-          Ce choix filtre ensuite les régimes et les activités sportives proposés par Tsinjo.
+          Ce choix filtre ensuite les régimes et les activités sportives.
         </p>
       </div>
       <div class="objective-summary hero-card">
