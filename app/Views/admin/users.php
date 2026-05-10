@@ -79,11 +79,6 @@
                                             <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?= $user['id'] ?>" title="Modifier">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <?php if ($user['role'] !== 'admin'): ?>
-                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $user['id'] ?>" title="Supprimer">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                            <?php endif; ?>
                                         </div>
                                     </td>
                                 </tr>
