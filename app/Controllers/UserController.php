@@ -14,8 +14,6 @@ use App\Models\UserModel;
 use App\Models\UserPortefeuileModel;
 use App\Models\MvntPrortefeuileModel;
 use App\Services\UserDashboardService;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 class UserController extends BaseController
 {
@@ -124,24 +122,120 @@ class UserController extends BaseController
         }
 
         $data = (new UserDashboardService())->getRegimeExportData($userId);
+        $fpdfPath = dirname(__DIR__, 2) . '/Autre/fpdf186/fpdf.php';
 
-        $html = view('user/regime_export_pdf', [
-            'user' => $data['user'],
-            'body' => $data['body'],
-            'programmes' => $data['programmes'],
-        ]);
+        if (! file_exists($fpdfPath)) {
+            throw new \RuntimeException('Bibliotheque FPDF introuvable: ' . $fpdfPath);
+        }
 
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('defaultFont', 'DejaVu Sans');
+        require_once $fpdfPath;
 
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
+        $pdf = new \FPDF('P', 'mm', 'A4');
+        $pdf->SetAutoPageBreak(true, 20);
+        $pdf->AddPage();
 
-        $pdfOutput = $dompdf->output();
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Cell(0, 10, utf8_decode('NutriPlan - Rapport des régimes'), 0, 1, 'C');
+        $pdf->Ln(2);
+
+        $pdf->SetFont('Arial', '', 11);
+        $pdf->Cell(40, 7, utf8_decode('Nom :'), 0, 0);
+        $pdf->Cell(0, 7, utf8_decode(trim($data['user']['name'] ?? $data['user']['email'] ?? 'Utilisateur')), 0, 1);
+        $pdf->Cell(40, 7, utf8_decode('Email :'), 0, 0);
+        $pdf->Cell(0, 7, utf8_decode($data['user']['email'] ?? 'N/A'), 0, 1);
+        $pdf->Cell(40, 7, utf8_decode('Objectif :'), 0, 0);
+        $pdf->Cell(0, 7, utf8_decode($data['body']['objectif_label'] ?? 'Non défini'), 0, 1);
+        $pdf->Cell(40, 7, utf8_decode('Poids / Taille :'), 0, 0);
+        $pdf->Cell(0, 7, utf8_decode(($data['body']['poids'] ?? '--') . ' kg / ' . ($data['body']['taille'] ?? '--') . ' m'), 0, 1);
+
+        $pdf->Ln(6);
+
+        if (empty($data['programmes'])) {
+            $pdf->SetFont('Arial', 'I', 11);
+            $pdf->Cell(0, 7, utf8_decode('Aucun programme acheté pour le moment.'), 0, 1);
+        } else {
+            foreach ($data['programmes'] as $programme) {
+                if ($pdf->GetY() > 250) {
+                    $pdf->AddPage();
+                }
+
+                $pdf->SetFont('Arial', 'B', 12);
+                $pdf->Cell(0, 8, utf8_decode($programme['regime_nom'] ?? 'Programme'), 0, 1);
+
+                $pdf->SetFont('Arial', '', 10);
+                $pdf->Cell(60, 6, utf8_decode('Durée :'), 0, 0);
+                $pdf->Cell(0, 6, utf8_decode((string) ((int) ($programme['duree_jours'] ?? 0)) . ' jours'), 0, 1);
+                $pdf->Cell(60, 6, utf8_decode('Prix payé :'), 0, 0);
+                $pdf->Cell(0, 6, utf8_decode(number_format((float) ($programme['prix_paye'] ?? 0), 0, ',', ' ') . ' Ar'), 0, 1);
+                $pdf->Cell(60, 6, utf8_decode('IMC cible :'), 0, 0);
+                $pdf->Cell(0, 6, utf8_decode((string) ($programme['imc_min'] ?? '--') . ' - ' . ($programme['imc_max'] ?? '--')), 0, 1);
+                $pdf->Cell(60, 6, utf8_decode('Variation visée :'), 0, 0);
+                $pdf->Cell(0, 6, utf8_decode((string) ($programme['variation_poids'] ?? '--') . ' kg'), 0, 1);
+                $pdf->Cell(60, 6, utf8_decode('Statut :'), 0, 0);
+                $pdf->Cell(0, 6, utf8_decode(((int) ($programme['id_statusRegime'] ?? 0)) === 2 ? 'Terminé' : 'Actif'), 0, 1);
+                $pdf->Cell(60, 6, utf8_decode('Début / Fin :'), 0, 0);
+                $pdf->Cell(0, 6, utf8_decode(($programme['date_debut'] ?? 'N/A') . ' / ' . ($programme['date_fin'] ?? 'N/A')), 0, 1);
+
+                $pdf->Ln(3);
+
+                if (!empty($programme['compositions'])) {
+                    foreach ($programme['compositions'] as $mealType => $items) {
+                        if ($pdf->GetY() > 240) {
+                            $pdf->AddPage();
+                        }
+
+                        $pdf->SetFont('Arial', 'B', 11);
+                        $pdf->Cell(0, 7, utf8_decode(ucwords(str_replace('_', ' ', strtolower($mealType))) . ' (' . count($items) . ' aliments)'), 0, 1);
+                        $pdf->SetFont('Arial', 'B', 10);
+                        $pdf->SetFillColor(235, 235, 235);
+                        $pdf->Cell(60, 6, utf8_decode('Aliment'), 1, 0, 'L', true);
+                        $pdf->Cell(28, 6, utf8_decode('Quantité'), 1, 0, 'C', true);
+                        $pdf->Cell(22, 6, utf8_decode('Calories'), 1, 0, 'C', true);
+                        $pdf->Cell(20, 6, utf8_decode('Prot.'), 1, 0, 'C', true);
+                        $pdf->Cell(20, 6, utf8_decode('Gluc.'), 1, 0, 'C', true);
+                        $pdf->Cell(20, 6, utf8_decode('Lip.'), 1, 1, 'C', true);
+                        $pdf->SetFont('Arial', '', 10);
+
+                        foreach ($items as $item) {
+                            if ($pdf->GetY() > 265) {
+                                $pdf->AddPage();
+                                $pdf->SetFont('Arial', 'B', 10);
+                                $pdf->SetFillColor(235, 235, 235);
+                                $pdf->Cell(60, 6, utf8_decode('Aliment'), 1, 0, 'L', true);
+                                $pdf->Cell(28, 6, utf8_decode('Quantité'), 1, 0, 'C', true);
+                                $pdf->Cell(22, 6, utf8_decode('Calories'), 1, 0, 'C', true);
+                                $pdf->Cell(20, 6, utf8_decode('Prot.'), 1, 0, 'C', true);
+                                $pdf->Cell(20, 6, utf8_decode('Gluc.'), 1, 0, 'C', true);
+                                $pdf->Cell(20, 6, utf8_decode('Lip.'), 1, 1, 'C', true);
+                                $pdf->SetFont('Arial', '', 10);
+                            }
+
+                            $pdf->Cell(60, 6, utf8_decode($item['aliment_nom'] ?? 'N/A'), 1, 0);
+                            $pdf->Cell(28, 6, utf8_decode((string) ($item['quantite_g'] ?? 0)), 1, 0, 'C');
+                            $pdf->Cell(22, 6, utf8_decode((string) ($item['calories'] ?? 0)), 1, 0, 'C');
+                            $pdf->Cell(20, 6, utf8_decode((string) ($item['proteines'] ?? 0)), 1, 0, 'C');
+                            $pdf->Cell(20, 6, utf8_decode((string) ($item['glucides'] ?? 0)), 1, 0, 'C');
+                            $pdf->Cell(20, 6, utf8_decode((string) ($item['lipides'] ?? 0)), 1, 1, 'C');
+                        }
+
+                        $pdf->Ln(4);
+                    }
+                } else {
+                    $pdf->SetFont('Arial', 'I', 10);
+                    $pdf->Cell(0, 6, utf8_decode('Aucune composition disponible pour ce programme.'), 0, 1);
+                    $pdf->Ln(4);
+                }
+
+                $pdf->Ln(2);
+            }
+        }
+
+        $pdf->SetY(-20);
+        $pdf->SetFont('Arial', 'I', 9);
+        $pdf->Cell(0, 10, utf8_decode('Document généré le ' . date('d/m/Y H:i') . ' - NutriPlan'), 0, 0, 'C');
+
         $fileName = 'NutriPlan_Regimes_' . date('Ymd_His') . '.pdf';
+        $pdfOutput = $pdf->Output('S');
 
         return $this->response
             ->setHeader('Content-Type', 'application/pdf')
