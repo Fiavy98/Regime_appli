@@ -196,6 +196,8 @@ class UserController extends BaseController
                 $pdf->SetFont('Arial', '', 10);
                 $pdf->SetTextColor(30, 41, 59);
                 $pdf->SetFillColor(255, 255, 255);
+                $pdf->SetDrawColor(209, 250, 229);
+
                 $pdf->Cell(45, 8, utf8_decode('Durée'), 1, 0, 'L', true);
                 $pdf->Cell(45, 8, utf8_decode('Prix payé'), 1, 0, 'L', true);
                 $pdf->Cell(50, 8, utf8_decode('IMC cible'), 1, 0, 'L', true);
@@ -206,13 +208,20 @@ class UserController extends BaseController
                 $pdf->Cell(50, 8, utf8_decode((string) ($programme['imc_min'] ?? '--') . ' - ' . ($programme['imc_max'] ?? '--')), 1, 0, 'L');
                 $pdf->Cell(0, 8, utf8_decode(((int) ($programme['id_statusRegime'] ?? 0)) === 2 ? 'Terminé' : 'Actif'), 1, 1, 'L');
 
+                $pdf->Ln(2);
+                $pdf->SetFont('Arial', 'B', 10);
+                $pdf->SetTextColor(15, 118, 110);
+                $pdf->Cell(0, 8, utf8_decode('Objectifs et suivi'), 0, 1, 'L');
+
+                $pdf->SetFont('Arial', '', 10);
+                $pdf->SetTextColor(30, 41, 59);
                 $pdf->Cell(45, 8, utf8_decode('Variation visée'), 1, 0, 'L', true);
-                $pdf->Cell(85, 8, utf8_decode('Début / Fin'), 1, 0, 'L', true);
-                $pdf->Cell(0, 8, utf8_decode('Points forts'), 1, 1, 'L', true);
+                $pdf->Cell(85, 8, utf8_decode('Période'), 1, 0, 'L', true);
+                $pdf->Cell(0, 8, utf8_decode('État'), 1, 1, 'L', true);
 
                 $pdf->Cell(45, 8, utf8_decode((string) ($programme['variation_poids'] ?? '--') . ' kg'), 1, 0, 'L');
-                $pdf->Cell(85, 8, utf8_decode(($programme['date_debut'] ?? 'N/A') . ' / ' . ($programme['date_fin'] ?? 'N/A')), 1, 0, 'L');
-                $pdf->Cell(0, 8, utf8_decode('A suivre'), 1, 1, 'L');
+                $pdf->Cell(85, 8, utf8_decode(($programme['date_debut'] ?? 'N/A') . ' au ' . ($programme['date_fin'] ?? 'N/A')), 1, 0, 'L');
+                $pdf->Cell(0, 8, utf8_decode('En cours de suivi'), 1, 1, 'L');
 
                 $pdf->Ln(4);
 
