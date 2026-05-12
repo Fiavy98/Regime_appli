@@ -132,7 +132,7 @@
         <div class="card text-white bg-info">
             <div class="card-body">
                 <h5>Ventes totales</h5>
-                <h2><?= array_sum($achats) ?> régimes</h2>
+                <h2><?= count($achats) ?> régimes</h2>
             </div>
         </div>
     </div>
